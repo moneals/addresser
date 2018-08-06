@@ -25,9 +25,10 @@ A Node.js library for parsing street addresses.
 ## Upcoming Features
 
 Once the basic parsing capabilities are working well I intend to add a 
-featurethat will assign a unique id to all addresses based on the parsed
+feature that will assign a unique id to all addresses based on the parsed
 values. Currently there is no easy, universal ID available for property
-addresses and this package should help bridge that gap for developers who need this type of ID.
+addresses and this package should help bridge that gap for developers who 
+need this type of ID.
     
 ## Tests
 
