@@ -12,10 +12,24 @@ module.exports = function(address) {
     var addressParts = address.split(',');
     var streetAddress = addressParts[0].trim();
     var streetParts = streetAddress.split(' ');
+    //Remove any double space problems
+    var i = streetParts.length;
+    while (i--) {
+      if (0 === streetParts[i].length) { 
+        streetParts.splice(i, 1);
+      }
+    }
+
     var result = {};
-    result.streetNumber = streetParts[0];
-    result.streetName = streetParts[1];
-    result.streetSuffix = streetParts[2];
+
+    result.streetNumber = streetParts[0]; // Assume number is first element
+    result.streetSuffix = streetParts[streetParts.length-1]; // Assume type is last element
+    
+    result.streetName = streetParts[1]; // Assume street name is everything in the middle
+    for (var i = 2; i < streetParts.length-1; i++) {
+      result.streetName = result.streetName + " " + streetParts[i];
+    }
+    
     result.placeName = addressParts[1].trim();
     result.stateAbbreviation = addressParts[2].trim();
 
