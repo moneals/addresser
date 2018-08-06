@@ -18,6 +18,8 @@ A Node.js library for parsing street addresses.
                        streetSuffix : "St",
                        placeName : "Conway",
                        stateAbbreviations : "SC"}`
+                       
+  NOTE: This currently supports only US addresses and this library is a WIP!
 
 ## Tests
 
