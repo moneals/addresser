@@ -31,7 +31,14 @@ module.exports = function(address) {
     }
     
     result.placeName = addressParts[1].trim();
-    result.stateAbbreviation = addressParts[2].trim();
-
+    var stateString = addressParts[2].trim();
+    if (stateString.length > 2) {
+      var stateParts = stateString.split(' ');
+      //Just assume its always a state abbreviation and zip5 for now
+      result.stateAbbreviation = stateParts[0];
+      result.zipCode = stateParts[1];
+    } else {
+      result.stateAbbreviation = stateString;
+    }
     return result;
 };

@@ -11,16 +11,24 @@ A Node.js library for parsing street addresses.
 
     var addressParser = require('addresser');
 
-    var formattedAddress = addressParser("123 Main St, Conway, SC);
+    var formattedAddress = addressParser("123 Main St, Conway, SC 29526);
  
-  Output should be  `{ streetNumber : "123",
+    Output should be  `{ streetNumber : "123",
                        streetName : "Main",
                        streetSuffix : "St",
                        placeName : "Conway",
-                       stateAbbreviations : "SC"}`
+                       stateAbbreviations : "SC",
+                       zipCode : "29526"}`
                        
-  NOTE: This currently supports only US addresses and this library is a WIP!
+  NOTE: Currently this supports only US addresses.
 
+## Upcoming Features
+
+    Once the basic parsing capabilities are working well I intend to add a feature
+    that will assign a unique id to all addresses based on the parsed values.
+    Currently there is no easy, universal ID available for property addresses and
+    this package should help bridge that gap for developers who need this type of ID.
+    
 ## Tests
 
   `npm test`
