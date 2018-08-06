@@ -12,9 +12,18 @@ A Node.js library for parsing street addresses.
     var addressParser = require('addresser');
 
     var formattedAddress = addressParser("123 Main St, Conway, SC);
+ 
+        expect(result.streetNumber).to.equal("123");
+        expect(result.streetName).to.equal("Main");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.placeName).to.equal("Conway");
+        expect(result.stateAbbreviation).to.equal("SC"); 
   
-  
-  Output should be `parsed 123 Main St, Conway, SC`
+  formattedAddress should be `{ streetNumber : "123",
+                                streetName : "Main",
+                                streetSuffix : "St",
+                                placeName : "Conway",
+                                stateAbbreviations : "SC"}`
 
 
 ## Tests
