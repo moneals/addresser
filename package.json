@@ -1,0 +1,30 @@
+{
+  "name": "addresser",
+  "version": "0.1.0",
+  "description": "Street Address Parser for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moneals/addresser.git"
+  },
+  "keywords": [
+    "address",
+    "parser",
+    "street",
+    "address",
+    "address"
+  ],
+  "author": "Michael Smith <michael@juniperbay.com> (http://www.michaelosmith.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/moneals/addresser/issues"
+  },
+  "homepage": "https://github.com/moneals/addresser#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
