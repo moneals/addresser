@@ -39,4 +39,5 @@ need this type of ID.
 In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## To Do List
-### Handle tabs and newlines as delimiters
+* Handle tabs and newlines as delimiters
+* Enhance README to include more parsing examples
