@@ -6,10 +6,12 @@
  * @return {string}
  **/
 module.exports = function(address) {
-    //TODO add test with double spaces
-    //TODO add test with street name having more than one word
-    // for now assume simple comma delimited address in form of street# streetname streetsuffix, city, state
     var addressParts = address.split(',');
+    
+    //Assume the last address section is state, zip or both
+    //TODO build logic
+    
+    
     var streetAddress = addressParts[0].trim();
     var streetParts = streetAddress.split(' ');
     //Remove any double space problems
@@ -30,15 +32,25 @@ module.exports = function(address) {
       result.streetName = result.streetName + " " + streetParts[i];
     }
     
-    result.placeName = addressParts[1].trim();
-    var stateString = addressParts[2].trim();
-    if (stateString.length > 2) {
-      var stateParts = stateString.split(' ');
-      //Just assume its always a state abbreviation and zip5 for now
-      result.stateAbbreviation = stateParts[0];
-      result.zipCode = stateParts[1];
+    if (addressParts.length > 1) {
+      result.placeName = addressParts[1].trim();
+      
+      if (addressParts.length > 2) {
+        var stateString = addressParts[2].trim();
+        if (stateString.length > 2) {
+          var stateParts = stateString.split(' ');
+          //Just assume its always a state abbreviation and zip5 for now
+          result.stateAbbreviation = stateParts[0];
+          result.zipCode = stateParts[1];
+        } else {
+          result.stateAbbreviation = stateString;
+        }
+      }
+    }  
+    
+    if(result.streetName && result.placeName && result.stateAbbreviation) {
+      return result;
     } else {
-      result.stateAbbreviation = stateString;
+      throw 'Can not parse address.'
     }
-    return result;
 };

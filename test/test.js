@@ -40,4 +40,7 @@ describe('#addressParser', function() {
         expect(result.stateAbbreviation).to.equal("SC");
         expect(result.zipCode).to.equal("29526");
     });
+    it('should parse a street address with missing city and state', function() {
+        expect(addressParser.bind(addressParser, "123 Main  St")).to.throw('Can not parse address.');
+    });
 });
