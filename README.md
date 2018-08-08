@@ -1,7 +1,10 @@
 addresser [![Build Status](https://travis-ci.org/moneals/addresser.svg?branch=master)](https://travis-ci.org/moneals/addresser) [![Coverage Status](https://coveralls.io/repos/github/moneals/addresser/badge.svg?branch=master)](https://coveralls.io/github/moneals/addresser?branch=master) [![npm version](https://badge.fury.io/js/addresser.svg)](https://badge.fury.io/js/addresser)
 =========
 
-A Node.js library for parsing street addresses.
+A Node.js library for parsing street addresses. Addresser will accept an address
+strings and convert it into structured address data. Addresser is designed to be
+flexible and forgiving in terms of the formatting of the address string but it
+does assume a general order of street data, city and state from left to right.
 
 ## Installation
 
@@ -11,14 +14,42 @@ A Node.js library for parsing street addresses.
 
     var addressParser = require('addresser');
 
-    var formattedAddress = addressParser("123 Main St, Conway, SC 29526);
+    console.log(addressParser("123 Main St, Conway, SC"));
+    
+    { streetNumber: '123',
+      streetSuffix: 'St',
+      streetName: 'Main',
+      placeName: 'Conway',
+      stateAbbreviation: 'SC' }
+    
+    console.log(addressParser("123 Main St, Conway, SC 29526"));
+    
+    { streetNumber: '123',
+      streetSuffix: 'St',
+      streetName: 'Main',
+      placeName: 'Conway',
+      stateAbbreviation: 'SC',
+      zipCode: '29526' }
+      
+    console.log(addressParser("123 Double  Space    St, Conway, SC 29526"));
+    
+    { streetNumber: '123',
+      streetSuffix: 'St',
+      streetName: 'Double Space',
+      placeName: 'Conway',
+      stateAbbreviation: 'SC',
+      zipCode: '29526' }
+      
+    console.log(addressParser("123 Main St, Conway, SC 29526-1234"));
+    
+    { streetNumber: '123',
+      streetSuffix: 'St',
+      streetName: 'Double Space',
+      placeName: 'Conway',
+      stateAbbreviation: 'SC',
+      zipCode: '29526',
+      zipCodePlusFour: '29526-1234'}
  
-   Output should be `{ streetNumber : "123",
-                       streetName : "Main",
-                       streetSuffix : "St",
-                       placeName : "Conway",
-                       stateAbbreviations : "SC",
-                       zipCode : "29526"}`
                        
   NOTE: Currently this supports only US addresses.
 

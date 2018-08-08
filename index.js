@@ -34,13 +34,6 @@ module.exports = function(address) {
 
     var streetAddress = addressParts[0].trim();
     var streetParts = streetAddress.split(' ');
-    //Remove any double space problems
-    var i = streetParts.length;
-    while (i--) {
-      if (0 === streetParts[i].length) { 
-        streetParts.splice(i, 1);
-      }
-    }
 
     result.streetNumber = streetParts[0]; // Assume number is first element
     result.streetSuffix = streetParts[streetParts.length-1]; // Assume type is last element
@@ -61,6 +54,6 @@ module.exports = function(address) {
     if(result.streetName && result.placeName && result.stateAbbreviation) {
       return result;
     } else {
-      throw 'Can not parse address.'
+      throw 'Can not parse address.';
     }
 };
