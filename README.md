@@ -44,7 +44,7 @@ does assume a general order of street data, city and state from left to right.
     
     { streetNumber: '123',
       streetSuffix: 'St',
-      streetName: 'Double Space',
+      streetName: 'Main',
       placeName: 'Conway',
       stateAbbreviation: 'SC',
       zipCode: '29526',
