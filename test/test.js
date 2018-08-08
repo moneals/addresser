@@ -11,16 +11,18 @@ describe('#addressParser', function() {
         expect(result.streetSuffix).to.equal("St");
         expect(result.placeName).to.equal("Conway");
         expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
         expect(result.hasOwnProperty("zipCode")).to.equal(false);
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse a street name with two words', function() {
-        var result = addressParser("123 Fat Duck St, Conway, SC");
+        var result = addressParser("123 Fat Duck St, Conway, TX");
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Fat Duck");
         expect(result.streetSuffix).to.equal("St");
         expect(result.placeName).to.equal("Conway");
-        expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
         expect(result.hasOwnProperty("zipCode")).to.equal(false);
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
@@ -31,6 +33,7 @@ describe('#addressParser', function() {
         expect(result.streetSuffix).to.equal("St");
         expect(result.placeName).to.equal("Conway");
         expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
         expect(result.hasOwnProperty("zipCode")).to.equal(false);
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
@@ -41,16 +44,51 @@ describe('#addressParser', function() {
         expect(result.streetSuffix).to.equal("St");
         expect(result.placeName).to.equal("Conway");
         expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
         expect(result.zipCode).to.equal("29526");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse a street address with zip code plus four in standard format', function() {
-        var result = addressParser("123 Main  St, Conway, SC 29526-3131");
+        var result = addressParser("123 Main  St, Conway, NC 29526-3131");
+        expect(result.streetNumber).to.equal("123");
+        expect(result.streetName).to.equal("Main");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.placeName).to.equal("Conway");
+        expect(result.stateAbbreviation).to.equal("NC");
+        expect(result.stateName).to.equal("North Carolina");
+        expect(result.zipCode).to.equal("29526");
+        expect(result.zipCodePlusFour).to.equal("29526-3131");
+    });
+    it('should parse a street address with a state name', function() {
+        var result = addressParser("123 Main  St, Conway, South Carolina 29526-3131");
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
         expect(result.placeName).to.equal("Conway");
         expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
+        expect(result.zipCode).to.equal("29526");
+        expect(result.zipCodePlusFour).to.equal("29526-3131");
+    });
+    it('should parse a street address with a lowercase state name', function() {
+        var result = addressParser("123 Main  St, Conway, south carolina 29526-3131");
+        expect(result.streetNumber).to.equal("123");
+        expect(result.streetName).to.equal("Main");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.placeName).to.equal("Conway");
+        expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
+        expect(result.zipCode).to.equal("29526");
+        expect(result.zipCodePlusFour).to.equal("29526-3131");
+    });
+    it('should parse a street address with a lowercase state abbeviation', function() {
+        var result = addressParser("123 Main  St, Conway, tx 29526-3131");
+        expect(result.streetNumber).to.equal("123");
+        expect(result.streetName).to.equal("Main");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.placeName).to.equal("Conway");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
         expect(result.zipCode).to.equal("29526");
         expect(result.zipCodePlusFour).to.equal("29526-3131");
     });
