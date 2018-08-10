@@ -50,6 +50,10 @@ A Node.js library for parsing street addresses.
       stateName: 'South Carolina',
       zipCode: '29526',
       zipCodePlusFour: '29526-1234'}
+      
+    console.log(addressParser("123 Main St, Conway, Texas 29526-1234"));
+    
+    Can not parse address. City not found or is invalid for specified state.
  
                        
   NOTE: Currently this supports only US addresses.
@@ -65,7 +69,7 @@ Addresser will normalize state names and abberviations and can recognize state
 data regardless of case or long name vs. abbreviation.
 
 Addresser will validate that the city provided is valid for the given state.
-In addition to the data integrity benefits it also allows for more intelligent
+In addition to the data integrity benefits this also allows for more intelligent
 parsing logic.
 
 ## Upcoming Features
