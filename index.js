@@ -1,4 +1,6 @@
-var usStates = require('./us-states.json');
+var usStates = require('./data/us-states.json');
+var usStreetTypes = require('./data/us-street-types.json');
+var usCities = require('./data/us-cities.json');
 
 'use strict';
 
@@ -26,8 +28,8 @@ module.exports = function(address) {
     }
     // Deal with any repeated spaces
     address = address.replace(/  +/g, ' ');
-    // Assume comma is an intentional delimiter
-    var addressParts = address.split(',');
+    // Assume comma and tab is an intentional delimiter
+    var addressParts = address.split(/,|\t/);
     
     var result = {};
     
@@ -54,6 +56,7 @@ module.exports = function(address) {
     if (stateString.length == 2 && getKeyByValue(usStates,stateString.toUpperCase())) {
       result.stateAbbreviation = stateString.toUpperCase();
       result.stateName = toTitleCase(getKeyByValue(usStates,stateString.toUpperCase()));
+      stateString = stateString.substring(0, stateString.length - 2);
     } else {
       // Next check if the state string ends in state name or abbeviation
       // (state abbreviation must be preceded by a space to ensure accuracy)
@@ -67,7 +70,36 @@ module.exports = function(address) {
         }
       }
     }
+    if (!result.stateAbbreviation || result.stateAbbreviation.length != 2) {
+      throw 'Can not parse address. State not found.';
+    }
 
+    // Parse and remove city/place name
+    var placeString = "";
+    if (stateString.length > 0) { // Check if anything is left of last section
+      addressParts[addressParts.length-1] = stateString;
+      placeString = addressParts[addressParts.length-1];
+    } else {
+      addressParts.splice(-1,1);
+      placeString = addressParts[addressParts.length-1].trim();
+    }
+    result.placeName = "";
+    usCities[result.stateAbbreviation].some(function(element) {
+      var re = new RegExp(element + "$", "i");
+      if (placeString.match(re)) {
+        console.log("Matched city data: " + element);
+        placeString = placeString.replace(re,""); // Carve off the place name
+        
+        result.placeName = element;
+        return element; // Found a winner - stop looking for cities
+      }
+    });
+    if (!result.placeName) {
+      throw 'Can not parse address. City not found or is invalid for specified state.';
+    }
+
+    // Assume street data is at the beginning
+    // 
     var streetAddress = addressParts[0].trim();
     var streetParts = streetAddress.split(' ');
 
@@ -79,13 +111,5 @@ module.exports = function(address) {
       result.streetName = result.streetName + " " + streetParts[i];
     }
     
-    if (addressParts.length > 1) {
-      result.placeName = addressParts[1].trim();
-    }  
-    
-    if(result.streetName && result.placeName && result.stateAbbreviation) {
-      return result;
-    } else {
-      throw 'Can not parse address.';
-    }
+    return result;
 };

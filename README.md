@@ -20,15 +20,15 @@ A Node.js library for parsing street addresses.
       stateAbbreviation: 'SC',
       stateName: 'South Carolina'}
     
-    console.log(addressParser("123 Main St, Conway, Texas 29526"));
+    console.log(addressParser("357 Apple St, San Antonio, Texas 78132"));
     
-    { streetNumber: '123',
+    { streetNumber: '357',
       streetSuffix: 'St',
-      streetName: 'Main',
-      placeName: 'Conway',
+      streetName: 'Apple',
+      placeName: 'San Antonio',
       stateAbbreviation: 'TX',
       stateName: 'Texas',
-      zipCode: '29526' }
+      zipCode: '78132' }
       
     console.log(addressParser("123 Double  Space    St, Conway, SC 29526"));
     
@@ -64,6 +64,10 @@ data, city data and state data from left to right.
 Addresser will normalize state names and abberviations and can recognize state
 data regardless of case or long name vs. abbreviation.
 
+Addresser will validate that the city provided is valid for the given state.
+In addition to the data integrity benefits it also allows for more intelligent
+parsing logic.
+
 ## Upcoming Features
 
 Once the basic parsing capabilities are working well I intend to add a 
@@ -78,7 +82,6 @@ need to cross reference property data across multiple data sources.
 
 ## Contributing
 
-In lieu of a formal style guide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code.
-
-## To Do List
-* Handle tabs and newlines as delimiters
+In lieu of a formal style guide, take care to maintain the existing coding 
+style. Add unit tests for any new or changed functionality. Lint and test 
+your code.
