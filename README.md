@@ -16,6 +16,7 @@ A Node.js library for parsing street addresses.
     { streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Main',
+      addressLine1: '123 Main St',
       placeName: 'Conway',
       stateAbbreviation: 'SC',
       stateName: 'South Carolina'}
@@ -27,6 +28,7 @@ A Node.js library for parsing street addresses.
       stateAbbreviation: 'NJ',
       stateName: 'New Jersey',
       placeName: 'South Orange',
+      addressLine1: '400 South Orange Ave',
       streetNumber: '400',
       streetSuffix: 'Ave',
       streetName: 'South Orange' }
@@ -37,6 +39,7 @@ A Node.js library for parsing street addresses.
     { streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Double Space',
+      addressLine1: '123 Double Space St',
       placeName: 'Conway',
       stateAbbreviation: 'SC',
       stateName: 'South Carolina',
@@ -48,6 +51,7 @@ A Node.js library for parsing street addresses.
     { streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Main',
+      addressName: '123 Main St',
       placeName: 'Conway',
       stateAbbreviation: 'SC',
       stateName: 'South Carolina',
