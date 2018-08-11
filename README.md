@@ -51,7 +51,7 @@ A Node.js library for parsing street addresses.
     { streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Main',
-      addressName: '123 Main St',
+      addressLine1: '123 Main St',
       placeName: 'Conway',
       stateAbbreviation: 'SC',
       stateName: 'South Carolina',
