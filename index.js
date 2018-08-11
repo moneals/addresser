@@ -117,15 +117,10 @@ module.exports = function(address) {
       streetString = addressParts[0].trim();
       //Assume street address comes first and the rest is secondary address
       //TODO add more intelligence in case the secondary is first
-      var reArray = [];
-      for (var key in usStreetTypes) {
-        reArray.push('\.\*\\b' + key + '\\b');
-      }
-      var re = new RegExp(reArray.join('|'), "i");
+      var re = new RegExp('\.\*\\b(?:' + Object.keys(usStreetTypes).join('|') + ')\\b', 'i');
       if (streetString.match(re)) {
         result.addressLine1 = streetString.match(re)[0];
         streetString = streetString.replace(re,"").trim(); // Carve off the place name
-        console.log("remaining st string " + streetString)
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {

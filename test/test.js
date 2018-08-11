@@ -191,4 +191,17 @@ describe('#addressParser', function() {
         expect(result.zipCode).to.equal("29203");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+    it('should parse an address with a glen plus haven suffix', function() {
+        var result = addressParser("1301 Glen Haven, Columbia, SC 29203");
+        expect(result.streetNumber).to.equal("1301");
+        expect(result.streetName).to.equal("Glen");
+        expect(result.streetSuffix).to.equal("Hvn");
+        expect(result.addressLine1).to.equal("1301 Glen Hvn");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Columbia");
+        expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
+        expect(result.zipCode).to.equal("29203");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
 });

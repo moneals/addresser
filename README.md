@@ -1,7 +1,7 @@
 addresser [![Build Status](https://travis-ci.org/moneals/addresser.svg?branch=master)](https://travis-ci.org/moneals/addresser) [![Coverage Status](https://coveralls.io/repos/github/moneals/addresser/badge.svg?branch=master)](https://coveralls.io/github/moneals/addresser?branch=master) [![npm version](https://badge.fury.io/js/addresser.svg)](https://badge.fury.io/js/addresser)
 =========
 
-A Node.js library for parsing street addresses.
+A Node.js library for parsing property addresses.
 
 ## Installation
 
@@ -63,7 +63,7 @@ A Node.js library for parsing street addresses.
     
     Can not parse address. City not found or is invalid for specified state.
  
-    // Handles secondary address lines even without delimeters.
+    // Handles secondary address lines even without delimiters.
     // Normalizes street types to standard abberviations.
     console.log(addressParser("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
 
@@ -86,8 +86,8 @@ data. Addresser is designed to be flexible and forgiving in terms of the
 formatting of the address string but it does assume a general order of street 
 data, city data and state data from left to right.
 
-Addresser will normalize state names and abberviations and can recognize state
-data regardless of case or long name vs. abbreviation. 
+Addresser will normalize state names and abbreviations and can recognize state
+data regardless of case or format.
 
 Addresser will validate that the city provided is valid for the given state.
 In addition to the data integrity benefits this also allows for more intelligent
