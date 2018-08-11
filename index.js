@@ -87,7 +87,6 @@ module.exports = function(address) {
     usCities[result.stateAbbreviation].some(function(element) {
       var re = new RegExp(element + "$", "i");
       if (placeString.match(re)) {
-        console.log("Matched city data: " + element);
         placeString = placeString.replace(re,""); // Carve off the place name
         
         result.placeName = element;
@@ -97,19 +96,62 @@ module.exports = function(address) {
     if (!result.placeName) {
       throw 'Can not parse address. City not found or is invalid for specified state.';
     }
-
-    // Assume street data is at the beginning
-    // 
-    var streetAddress = addressParts[0].trim();
-    var streetParts = streetAddress.split(' ');
+    
+    // Parse the street data
+    var streetString = "";
+    if (placeString.length > 0) { // Check if anything is left of last section
+      addressParts[addressParts.length-1] = placeString;
+    } else {
+      addressParts.splice(-1,1);
+    }
+    
+    if (addressParts.length > 2) {
+      throw 'Can not parse address. More than two address lines.';
+    } else if (addressParts.length === 2) {
+      //Assume street line is first
+      result.addressLine2 = addressParts[1].trim();
+      addressParts.splice(-1,1);
+      //TODO add more intelligence in case the secondary data is first
+    }
+    if (addressParts.length === 1) {
+      streetString = addressParts[0].trim();
+      //Assume street address comes first and the rest is secondary address
+      //TODO add more intelligence in case the secondary is first
+      var reArray = [];
+      for (var key in usStreetTypes) {
+        reArray.push('\.\*\\b' + key + '\\b');
+      }
+      var re = new RegExp(reArray.join('|'), "i");
+      if (streetString.match(re)) {
+        result.addressLine1 = streetString.match(re)[0];
+        streetString = streetString.replace(re,"").trim(); // Carve off the place name
+        console.log("remaining st string " + streetString)
+        if (streetString && streetString.length > 0) {
+          // Check if line2 data was already parsed
+          if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
+            throw 'Can not parse address. Invalid street address data.';
+          } else {
+            result.addressLine2 = streetString;
+          }
+        }
+      } else {
+        throw 'Can not parse address. Invalid street address data.';
+      }
+    } else {
+      throw 'Can not parse address. Invalid street address data.';
+    }
+    
+    var streetParts = result.addressLine1.split(' ');
 
     result.streetNumber = streetParts[0]; // Assume number is first element
-    result.streetSuffix = streetParts[streetParts.length-1]; // Assume type is last element
-    
+    // Assume type is last element
+    result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
     result.streetName = streetParts[1]; // Assume street name is everything in the middle
     for (var i = 2; i < streetParts.length-1; i++) {
       result.streetName = result.streetName + " " + streetParts[i];
     }
+    result.streetName = toTitleCase(result.streetName);
+    result.addressLine1 = [result.streetNumber, result.streetName, result.streetSuffix].join(" ");
     
     return result;
 };

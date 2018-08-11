@@ -20,16 +20,18 @@ A Node.js library for parsing street addresses.
       stateAbbreviation: 'SC',
       stateName: 'South Carolina'}
     
-    console.log(addressParser("357 Apple St, San Antonio, Texas 78132"));
+    // Isn't confused by duplicate place names
+    console.log(addressParser("400 South Orange Ave, South Orange , NJ 07079"););
     
-    { streetNumber: '357',
-      streetSuffix: 'St',
-      streetName: 'Apple',
-      placeName: 'San Antonio',
-      stateAbbreviation: 'TX',
-      stateName: 'Texas',
-      zipCode: '78132' }
-      
+    { zipCode: '07079',
+      stateAbbreviation: 'NJ',
+      stateName: 'New Jersey',
+      placeName: 'South Orange',
+      streetNumber: '400',
+      streetSuffix: 'Ave',
+      streetName: 'South Orange' }
+    
+    // Handles extra whitespace
     console.log(addressParser("123 Double  Space    St, Conway, SC 29526"));
     
     { streetNumber: '123',
@@ -39,7 +41,8 @@ A Node.js library for parsing street addresses.
       stateAbbreviation: 'SC',
       stateName: 'South Carolina',
       zipCode: '29526' }
-      
+    
+    // normalizes to Title Case  
     console.log(addressParser("123 Main St, Conway, south carolina 29526-1234"));
     
     { streetNumber: '123',
@@ -51,11 +54,24 @@ A Node.js library for parsing street addresses.
       zipCode: '29526',
       zipCodePlusFour: '29526-1234'}
       
+    // Validates correct city and state combinations
     console.log(addressParser("123 Main St, Conway, Texas 29526-1234"));
     
     Can not parse address. City not found or is invalid for specified state.
  
-                       
+    // Handles secondary address lines even without delimeters
+    console.log(addressParser("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
+
+    { zipCode: '29203',
+      stateAbbreviation: 'SC',
+      stateName: 'South Carolina',
+      placeName: 'Columbia',
+      addressLine1: '1301 Columbia College Dr',
+      addressLine2: 'Unit 101',
+      streetNumber: '1301',
+      streetSuffix: 'Dr',
+      streetName: 'Columbia College' }       
+  
   NOTE: Currently this supports only US addresses.
   
 ## Features
