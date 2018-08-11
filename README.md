@@ -83,11 +83,14 @@ formatting of the address string but it does assume a general order of street
 data, city data and state data from left to right.
 
 Addresser will normalize state names and abberviations and can recognize state
-data regardless of case or long name vs. abbreviation.
+data regardless of case or long name vs. abbreviation. 
 
 Addresser will validate that the city provided is valid for the given state.
 In addition to the data integrity benefits this also allows for more intelligent
 parsing logic.
+
+Addresser normalizes street types to standard abberviations ie. Drive to Dr,
+Street to St, etc.
 
 ## Upcoming Features
 
