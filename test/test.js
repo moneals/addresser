@@ -9,6 +9,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Conway");
@@ -22,6 +23,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Fat Duck");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Fat Duck St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Powder Springs");
@@ -35,6 +37,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Conway");
@@ -48,6 +51,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("New Braunfels");
@@ -61,6 +65,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Conway");
@@ -74,6 +79,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Conway");
@@ -87,6 +93,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Conway");
@@ -100,6 +107,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("San Antonio");
@@ -113,6 +121,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
         expect(result.streetSuffix).to.equal("St");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Canyon Lake");
@@ -144,6 +153,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("400");
         expect(result.streetName).to.equal("South Orange");
         expect(result.streetSuffix).to.equal("Ave");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("400 South Orange Ave");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("South Orange");
@@ -157,6 +167,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Columbia College");
         expect(result.streetSuffix).to.equal("Dr");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("1301 Columbia College Dr");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Columbia");
@@ -172,6 +183,7 @@ describe('#addressParser', function() {
         expect(result.streetSuffix).to.equal("Dr");
         expect(result.addressLine1).to.equal("1301 Columbia College Dr");
         expect(result.addressLine2).to.equal("Unit 101");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.placeName).to.equal("Columbia");
         expect(result.stateAbbreviation).to.equal("SC");
         expect(result.stateName).to.equal("South Carolina");
@@ -183,6 +195,7 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Columbia College");
         expect(result.streetSuffix).to.equal("Dr");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("1301 Columbia College Dr");
         expect(result.addressLine2).to.equal("APT A");
         expect(result.placeName).to.equal("Columbia");
@@ -196,7 +209,22 @@ describe('#addressParser', function() {
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Glen");
         expect(result.streetSuffix).to.equal("Hvn");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
         expect(result.addressLine1).to.equal("1301 Glen Hvn");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Columbia");
+        expect(result.stateAbbreviation).to.equal("SC");
+        expect(result.stateName).to.equal("South Carolina");
+        expect(result.zipCode).to.equal("29203");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+    it('should parse an address with a direction following the street type', function() {
+        var result = addressParser("1301 Acme Avenue E, Columbia, SC 29203");
+        expect(result.streetNumber).to.equal("1301");
+        expect(result.streetName).to.equal("Acme");
+        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.streetDirection).to.equal("E");
+        expect(result.addressLine1).to.equal("1301 Acme Ave E");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Columbia");
         expect(result.stateAbbreviation).to.equal("SC");

@@ -64,7 +64,7 @@ A Node.js library for parsing property addresses.
     Can not parse address. City not found or is invalid for specified state.
  
     // Handles secondary address lines even without delimiters.
-    // Normalizes street types to standard abberviations.
+    // Normalizes street types to standard abbreviations.
     console.log(addressParser("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
 
     { zipCode: '29203',
