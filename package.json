@@ -1,6 +1,6 @@
 {
   "name": "addresser",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Street Address Parser for Node.js",
   "main": "index.js",
   "scripts": {
