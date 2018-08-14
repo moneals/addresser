@@ -32,6 +32,48 @@ var usStreetDirectional = {
     northwest   : "NW",
 };
 
+var usLine2Prefixes = {
+    'APARTMENT' :	'APT',
+    'APT'       : 'APT',
+    'BASEMENT'  :	'BSMT',
+    'BSMT'      : 'BSMT',
+    'BLDG'      : 'BLDG',
+    'BUILDING'  : 'BLDG',
+    'DEPARTMENT' :	'DEPT',
+    'DEPT'      : 'DEPT',
+    'FL'        : 'FL',
+    'FLOOR'     :	'FL',
+    'FRNT'      : 'FRNT',
+    'FRONT'	    : 'FRNT',
+    'HANGAR'    :	'HNGR',
+    'HNGR'      : 'HNGR',
+    'LBBY'      : 'LBBY',
+    'LOBBY'     :	'LBBY',
+    'LOT'       : 'LOT',
+    'LOWER'     :	'LOWR',
+    'LOWR'      : 'LOWER',
+    'OFC'       : 'OFC',
+    'OFFICE'	  : 'OFC',
+    'PENTHOUSE'	: 'PH',
+    'PH'        : 'PH',
+    'PIER'      :	'PIER',
+    'REAR'      :	'REAR',
+    'RM'        : 'RM',
+    'ROOM'      :	'RM',
+    'SIDE'      :	'SIDE',
+    'SLIP'      :	'SLIP',
+    'SPACE'     :	'SPC',
+    'SPC'       : 'SPC',
+    'STE'       : 'STE',
+    'STOP'      :	'STOP',
+    'SUITE'     :	'STE',
+    'TRAILER'	  : 'TRLR',
+    'TRLR'      : 'TRLR',
+    'UNIT'      :	'UNIT',
+    'UPPER'     : 'UPPR',
+    'UPPR'      : 'UPPR'
+}
+
 module.exports = function(address) {
     // Validate a non-empty string was passed
     if (!address) {
@@ -111,6 +153,7 @@ module.exports = function(address) {
     // Parse the street data
     var streetString = "";
     var usStreetDirectionalString = Object.keys(usStreetDirectional).map(x => usStreetDirectional[x]).join('|');
+    var usLine2String = Object.keys(usLine2Prefixes).join('|');
 
     if (placeString.length > 0) { // Check if anything is left of last section
       addressParts[addressParts.length-1] = placeString;
@@ -121,15 +164,28 @@ module.exports = function(address) {
     if (addressParts.length > 2) {
       throw 'Can not parse address. More than two address lines.';
     } else if (addressParts.length === 2) {
+      // check if the secondary data is first
+      var re = new RegExp('^(' + usLine2String + ')\\b','i');
+      if (addressParts[0].match(re)) {
+        var tmpString = addressParts[1];
+        addressParts[1] = addressParts[0];
+        addressParts[0] = tmpString;
+      }
       //Assume street line is first
       result.addressLine2 = addressParts[1].trim();
       addressParts.splice(-1,1);
-      //TODO add more intelligence in case the secondary data is first
     }
     if (addressParts.length === 1) {
       streetString = addressParts[0].trim();
+      // If no address line 2 exists check to see if it is incorrectly placed at the front of line 1
+      if (typeof result.addressLine2 === "undefined") {
+        var re = new RegExp('^(' + usLine2String + ')\\s\\S+','i');
+        if (streetString.match(re)) {
+          result.addressLine2 = streetString.match(re)[0];
+          streetString = streetString.replace(re,"").trim(); // Carve off the line 2 data
+        }
+      }
       //Assume street address comes first and the rest is secondary address
-      //TODO add more intelligence in case the secondary is first
       var re = new RegExp('\.\*\\b(?:' + 
         Object.keys(usStreetTypes).join('|') + ')\\b' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
@@ -153,10 +209,11 @@ module.exports = function(address) {
     
     var streetParts = result.addressLine1.split(' ');
 
+    
     // Check if directional is last element
-    var re = new RegExp('\.\*\\b(?:' + usStreetDirectionalString + ')$');
+    var re = new RegExp('\.\*\\b(?:' + usStreetDirectionalString + ')$', 'i');
     if (result.addressLine1.match(re)) {
-      result.streetDirection = streetParts.pop();
+      result.streetDirection = streetParts.pop().toUpperCase();
     }
      
     // Assume type is last and number is first   
