@@ -76,6 +76,19 @@ A Node.js library for parsing property addresses.
       streetNumber: '1301',
       streetSuffix: 'Dr',
       streetName: 'Columbia College' }       
+    
+    // Handles trailing street directionals  
+    console.log(addressParser("300 BOYLSTON AVE E SEATTLE WA 98102"));
+    { zipCode: '98102',
+      stateAbbreviation: 'WA',
+      stateName: 'Washington',
+      placeName: 'Seattle',
+      addressLine1: '300 Boylston Ave E',
+      streetDirection: 'E',
+      streetNumber: '300',
+      streetSuffix: 'Ave',
+      streetName: 'Boylston' }
+
   
   NOTE: Currently this supports only US addresses.
   
