@@ -21,6 +21,12 @@ function toTitleCase(str) {
     });
 }
 
+//returns a random property of a given object
+function randomProperty (obj) {
+  var keys = Object.keys(obj)
+  return keys[ keys.length * Math.random() << 0];
+};
+
 var usStreetDirectional = {
     north       : "N",
     northeast   : "NE",
@@ -74,7 +80,8 @@ var usLine2Prefixes = {
     'UPPR'      : 'UPPR'
 }
 
-module.exports = function(address) {
+module.exports = {
+  parseAddress: function(address) {
     // Validate a non-empty string was passed
     if (!address) {
       throw 'Argument must be a non-empty string.';
@@ -231,4 +238,11 @@ module.exports = function(address) {
     }
     
     return result;
+  },
+  randomCity: function() {
+    var randomState = randomProperty(usCities);
+    var randomStateData = usCities[randomState];
+    var randomCity = randomStateData[Math.floor(Math.random() * randomStateData.length)];
+    return { city: randomCity, state: randomState};
+  }
 };

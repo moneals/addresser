@@ -1,7 +1,7 @@
 addresser [![Build Status](https://travis-ci.org/moneals/addresser.svg?branch=master)](https://travis-ci.org/moneals/addresser) [![Coverage Status](https://coveralls.io/repos/github/moneals/addresser/badge.svg?branch=master)](https://coveralls.io/github/moneals/addresser?branch=master) [![npm version](https://badge.fury.io/js/addresser.svg)](https://badge.fury.io/js/addresser)
 =========
 
-A Node.js library for parsing property addresses.
+A Node.js library for parsing property addresses. Also includes other address utilities such as a function that returns a random city.
 
 ## Installation
 
@@ -9,9 +9,9 @@ A Node.js library for parsing property addresses.
 
 ## Usage
 
-    var addressParser = require('addresser');
+    var addresser = require('addresser');
 
-    console.log(addressParser("123 Main St, Conway, SC"));
+    console.log(addresser.parseAddress("123 Main St, Conway, SC"));
     
     { streetNumber: '123',
       streetSuffix: 'St',
@@ -22,7 +22,7 @@ A Node.js library for parsing property addresses.
       stateName: 'South Carolina'}
     
     // Isn't confused by duplicate place names
-    console.log(addressParser("400 South Orange Ave, South Orange , NJ 07079"););
+    console.log(addresser.parseAddress("400 South Orange Ave, South Orange , NJ 07079"););
     
     { zipCode: '07079',
       stateAbbreviation: 'NJ',
@@ -34,7 +34,7 @@ A Node.js library for parsing property addresses.
       streetName: 'South Orange' }
     
     // Handles extra whitespace
-    console.log(addressParser("123 Double  Space    St, Conway, SC 29526"));
+    console.log(addresser.parseAddress("123 Double  Space    St, Conway, SC 29526"));
     
     { streetNumber: '123',
       streetSuffix: 'St',
@@ -46,7 +46,7 @@ A Node.js library for parsing property addresses.
       zipCode: '29526' }
     
     // normalizes to Title Case  
-    console.log(addressParser("123 Main St, Conway, south carolina 29526-1234"));
+    console.log(addresser.parseAddress("123 Main St, Conway, south carolina 29526-1234"));
     
     { streetNumber: '123',
       streetSuffix: 'St',
@@ -59,13 +59,13 @@ A Node.js library for parsing property addresses.
       zipCodePlusFour: '29526-1234'}
       
     // Validates correct city and state combinations
-    console.log(addressParser("123 Main St, Conway, Texas 29526-1234"));
+    console.log(addresser.parseAddress("123 Main St, Conway, Texas 29526-1234"));
     
     Can not parse address. City not found or is invalid for specified state.
  
     // Handles secondary address lines even without delimiters.
     // Normalizes street types to standard abbreviations.
-    console.log(addressParser("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
+    console.log(addresser.parseAddress("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
 
     { zipCode: '29203',
       stateAbbreviation: 'SC',
@@ -78,7 +78,7 @@ A Node.js library for parsing property addresses.
       streetName: 'Columbia College' }       
     
     // Handles trailing street directionals  
-    console.log(addressParser("300 BOYLSTON AVE E SEATTLE WA 98102"));
+    console.log(addresser.parseAddress("300 BOYLSTON AVE E SEATTLE WA 98102"));
     { zipCode: '98102',
       stateAbbreviation: 'WA',
       stateName: 'Washington',
@@ -88,6 +88,11 @@ A Node.js library for parsing property addresses.
       streetNumber: '300',
       streetSuffix: 'Ave',
       streetName: 'Boylston' }
+
+    // Return a random valid city 
+    console.log(addresser.randomCity());
+    { city: 'Irwin',
+      state: 'ID' }
 
   
   NOTE: Currently this supports only US addresses.
@@ -108,6 +113,9 @@ parsing logic.
 
 Addresser normalizes street types to standard abberviations ie. Drive to Dr,
 Street to St, etc.
+
+Addresser can also be used to generate a random valid city. This can be helpful
+when testing.
 
 ## Upcoming Features
 
