@@ -292,10 +292,24 @@ describe('#parseAddress', function() {
 
 describe('#randomCity', function() {
     it('should provide a random city', function() {
-        var result = addresser.randomCity();
-        expect(result.hasOwnProperty("city")).to.equal(true);
-        expect(result['city'].length).to.be.above(1);
-        expect(result.hasOwnProperty("state")).to.equal(true);
-        expect(result['state'].length).to.equal(2);
+        for (var i = 0; i < 20; i++) { 
+            var result = addresser.randomCity();
+            expect(result.hasOwnProperty("city")).to.equal(true);
+            expect(result['city'].length).to.be.above(1);
+            expect(result.hasOwnProperty("state")).to.equal(true);
+            expect(result['state'].length).to.equal(2);
+        }
+    });
+});
+
+describe('##cities', function() {
+    it('should provide a full list of cities', function() {
+        var result = addresser.cities();
+        expect(result['WV'].includes('War')).to.be.true;
+        expect(result['ND'].includes('Center')).to.be.true;
+        expect(result['LA'].includes('Bentley')).to.be.true;
+        expect(result['NY'].includes('Cleveland')).to.be.true;
+        expect(result['SC'].includes('Marion')).to.be.true;
+        expect(result['TX'].includes('ThisCityCannot143234234234234PossiblyExist')).to.be.false;
     });
 });

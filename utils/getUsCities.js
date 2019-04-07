@@ -20,7 +20,7 @@ unzipper.Open.url(request,'http://download.geonames.org/export/zip/US.zip')
     citiesData.forEach(function(element) {
       var cityData = element.split('\t');
       //console.log(cityData[2] + ", " + cityData[4]);
-      if (cityData[4] && cityData[4].length == 2) {
+      if (cityData[4] && cityData[4].length == 2 && cityHash.hasOwnProperty(cityData[4])) {
         cityHash[cityData[4]].push(cityData[2]);
       }
     });

@@ -239,10 +239,16 @@ module.exports = {
     
     return result;
   },
+
   randomCity: function() {
     var randomState = randomProperty(usCities);
     var randomStateData = usCities[randomState];
-    var randomCity = randomStateData[Math.floor(Math.random() * randomStateData.length)];
+    var randomCityElementId = Math.floor(Math.random() * randomStateData.length);
+    var randomCity = randomStateData[randomCityElementId];
     return { city: randomCity, state: randomState};
+  },
+
+  cities: function() {
+    return(usCities);
   }
 };
