@@ -310,6 +310,7 @@ describe('##cities', function() {
         expect(result['LA'].includes('Bentley')).to.be.true;
         expect(result['NY'].includes('Cleveland')).to.be.true;
         expect(result['SC'].includes('Marion')).to.be.true;
+        expect(result['TX'].length).to.be.greaterThan(300);
         expect(result['TX'].includes('ThisCityCannot143234234234234PossiblyExist')).to.be.false;
     });
 });

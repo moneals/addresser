@@ -5,49 +5,7 @@ A Node.js library for parsing property addresses. Also includes other address ut
 
 ## Installation
 
-  `npm install addresser`
-
-## Functions
-
-### parseAddress
-
-parseAddress will accept an address string and convert it into structured address 
-data. Addresser is designed to be flexible and forgiving in terms of the 
-formatting of the address string but it does assume a general order of street 
-data, city data and state data from left to right. parseAddress will normalize
-state names and abbreviations and can recognize state data regardless of case or format.
-
-parseAddress will validate that the city provided is valid for the given state.
-In addition to the data integrity benefits this also allows for more intelligent
-parsing logic. parseAddress also normalizes street types to standard abberviations ie. Drive to Dr,
-Street to St, etc.
-
-### getRandomCity
-
-The getRandomCity function can be used to generate a random valid city. This can be helpful
-when testing.
-
-### cities
-
-The cities function returns a JSON object that contains a list of all known cities and states. The structure is as follows:
-    
-    { 
-      ...
-      WI:
-        [ 
-          'Black River Falls',
-          'Heafford Junction',
-          'Washington Island',
-          ...
-        ],
-      WY:
-        [ 
-          'Yellowstone National Park',
-          'Saint Stephens',
-          'Little America',
-          ...
-        ]
-    }
+    npm install addresser
 
 ## Usage
 
@@ -156,8 +114,49 @@ The cities function returns a JSON object that contains a list of all known citi
         ]
     } 
 
-  
-  NOTE: Currently this supports only US addresses.
+NOTE: Currently addresser supports only US addresses.  
+
+## Functions
+
+### parseAddress
+
+parseAddress will accept an address string and convert it into structured address 
+data. Addresser is designed to be flexible and forgiving in terms of the 
+formatting of the address string but it does assume a general order of street 
+data, city data and state data from left to right. parseAddress will normalize
+state names and abbreviations and can recognize state data regardless of case or format.
+
+parseAddress will validate that the city provided is valid for the given state.
+In addition to the data integrity benefits this also allows for more intelligent
+parsing logic. parseAddress also normalizes street types to standard abberviations ie. Drive to Dr,
+Street to St, etc.
+
+### getRandomCity
+
+The getRandomCity function can be used to generate a random valid city. This can be helpful
+when testing.
+
+### cities
+
+The cities function returns a JSON object that contains a list of all known cities and states. The structure is as follows:
+    
+    { 
+      ...
+      WI:
+        [ 
+          'Black River Falls',
+          'Heafford Junction',
+          'Washington Island',
+          ...
+        ],
+      WY:
+        [ 
+          'Yellowstone National Park',
+          'Saint Stephens',
+          'Little America',
+          ...
+        ]
+    }
 
 ## Upcoming Features
 
