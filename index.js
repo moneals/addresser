@@ -88,8 +88,8 @@ module.exports = {
     }
     // Deal with any repeated spaces
     address = address.replace(/  +/g, ' ');
-    // Assume comma and tab is an intentional delimiter
-    var addressParts = address.split(/,|\t/);
+    // Assume comma, newline and tab is an intentional delimiter
+    var addressParts = address.split(/,|\t|\n/);
     
     var result = {};
 
@@ -200,11 +200,12 @@ module.exports = {
       }
       //Assume street address comes first and the rest is secondary address
       var re = new RegExp('\.\*\\b(?:' + 
-        Object.keys(usStreetTypes).join('|') + ')\\b' + 
+        Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
+      console.log(re);
       if (streetString.match(re)) {
         result.addressLine1 = streetString.match(re)[0];
-        streetString = streetString.replace(re,"").trim(); // Carve off the place name
+        streetString = streetString.replace(re,"").trim(); // Carve off the first address line
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
@@ -231,6 +232,8 @@ module.exports = {
     // Assume type is last and number is first   
     result.streetNumber = streetParts[0]; // Assume number is first element
 
+    // Remove '.' if it follows streetSuffix
+    streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
     result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
     result.streetName = streetParts[1]; // Assume street name is everything in the middle
     for (var i = 2; i < streetParts.length-1; i++) {

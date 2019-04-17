@@ -301,6 +301,34 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("98102");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+    it('should parse an address with a dot after street abbreviation', function() {
+        var result = addresser.parseAddress("200 SUMMIT LAKE DR., VALHALLA NY 10595");
+        console.log(JSON.stringify(result));
+        expect(result.streetNumber).to.equal("200");
+        expect(result.streetName).to.equal("Summit Lake");
+        expect(result.streetSuffix).to.equal("Dr");
+        expect(result.addressLine1).to.equal("200 Summit Lake Dr");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Valhalla");
+        expect(result.stateAbbreviation).to.equal("NY");
+        expect(result.stateName).to.equal("New York");
+        expect(result.zipCode).to.equal("10595");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+    it('should parse an address with a newline separator', function() {
+        var result = addresser.parseAddress("200 SUMMIT LAKE DR.\nVALHALLA NY 10595");
+        console.log(JSON.stringify(result));
+        expect(result.streetNumber).to.equal("200");
+        expect(result.streetName).to.equal("Summit Lake");
+        expect(result.streetSuffix).to.equal("Dr");
+        expect(result.addressLine1).to.equal("200 Summit Lake Dr");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Valhalla");
+        expect(result.stateAbbreviation).to.equal("NY");
+        expect(result.stateName).to.equal("New York");
+        expect(result.zipCode).to.equal("10595");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
 });
 
 describe('#randomCity', function() {
