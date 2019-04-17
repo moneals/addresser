@@ -208,16 +208,16 @@ module.exports = {
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
-            throw 'Can not parse address. Invalid street address data.';
+            throw 'Can not parse address. Too many address lines. Input string: ' + address;
           } else {
             result.addressLine2 = streetString;
           }
         }
       } else {
-        throw 'Can not parse address. Invalid street address data.';
+        throw 'Can not parse address. Invalid street address data. Input string: ' + address;
       }
     } else {
-      throw 'Can not parse address. Invalid street address data.';
+      throw 'Can not parse address. Invalid street address data. Input string: ' + address;
     }
     
     var streetParts = result.addressLine1.split(' ');
