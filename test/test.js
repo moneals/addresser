@@ -320,12 +320,25 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Summit Lake");
         expect(result.streetSuffix).to.equal("Dr");
         expect(result.addressLine1).to.equal("200 Summit Lake Dr");
-        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result).to.not.have.property('addressLine2');
         expect(result.placeName).to.equal("Valhalla");
         expect(result.stateAbbreviation).to.equal("NY");
         expect(result.stateName).to.equal("New York");
         expect(result.zipCode).to.equal("10595");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+    it('should parse an address with a PO BOX', function() {
+        var result = addresser.parseAddress("PO BOX 538\nBASILE LA 70515-0538");
+        expect(result.addressLine1).to.equal("PO BOX 538");
+        expect(result).to.not.have.property('addressLine2');
+        expect(result).to.not.have.property('streetNumber');
+        expect(result).to.not.have.property('streetName');
+        expect(result).to.not.have.property('streetSuffix');
+        expect(result.placeName).to.equal("Basile");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70515");
+        expect(result.zipCodePlusFour).to.equal("70515-0538");
     });
 });
 

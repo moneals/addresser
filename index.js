@@ -199,12 +199,13 @@ module.exports = {
         }
       }
       //Assume street address comes first and the rest is secondary address
-      var re = new RegExp('\.\*\\b(?:' + 
+      var reStreet = new RegExp('\.\*\\b(?:' + 
         Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
-      if (streetString.match(re)) {
-        result.addressLine1 = streetString.match(re)[0];
-        streetString = streetString.replace(re,"").trim(); // Carve off the first address line
+      var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+BOX\\s\\w+', 'i');
+      if (streetString.match(reStreet)) {
+        result.addressLine1 = streetString.match(reStreet)[0];
+        streetString = streetString.replace(reStreet,"").trim(); // Carve off the first address line
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
@@ -213,35 +214,37 @@ module.exports = {
             result.addressLine2 = streetString;
           }
         }
+        var streetParts = result.addressLine1.split(' ');
+    
+        // Check if directional is last element
+        var re = new RegExp('\.\*\\b(?:' + usStreetDirectionalString + ')$', 'i');
+        if (result.addressLine1.match(re)) {
+          result.streetDirection = streetParts.pop().toUpperCase();
+        }
+        
+        // Assume type is last and number is first   
+        result.streetNumber = streetParts[0]; // Assume number is first element
+
+        // Remove '.' if it follows streetSuffix
+        streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
+        result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+        result.streetName = streetParts[1]; // Assume street name is everything in the middle
+        for (var i = 2; i < streetParts.length-1; i++) {
+          result.streetName = result.streetName + " " + streetParts[i];
+        }
+        result.streetName = toTitleCase(result.streetName);
+        result.addressLine1 = [result.streetNumber, result.streetName, result.streetSuffix].join(" ");
+        if (result.streetDirection) {
+          result.addressLine1 = result.addressLine1 + ' ' + result.streetDirection;
+        }
+      } else if (streetString.match(rePO)) {
+        result.addressLine1 = streetString.match(rePO)[0];
+        streetString = streetString.replace(rePO,"").trim(); // Carve off the first address line
       } else {
         throw 'Can not parse address. Invalid street address data. Input string: ' + address;
       }
     } else {
       throw 'Can not parse address. Invalid street address data. Input string: ' + address;
-    }
-    
-    var streetParts = result.addressLine1.split(' ');
-    
-    // Check if directional is last element
-    var re = new RegExp('\.\*\\b(?:' + usStreetDirectionalString + ')$', 'i');
-    if (result.addressLine1.match(re)) {
-      result.streetDirection = streetParts.pop().toUpperCase();
-    }
-     
-    // Assume type is last and number is first   
-    result.streetNumber = streetParts[0]; // Assume number is first element
-
-    // Remove '.' if it follows streetSuffix
-    streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
-    result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
-    result.streetName = streetParts[1]; // Assume street name is everything in the middle
-    for (var i = 2; i < streetParts.length-1; i++) {
-      result.streetName = result.streetName + " " + streetParts[i];
-    }
-    result.streetName = toTitleCase(result.streetName);
-    result.addressLine1 = [result.streetNumber, result.streetName, result.streetSuffix].join(" ");
-    if (result.streetDirection) {
-      result.addressLine1 = result.addressLine1 + ' ' + result.streetDirection;
     }
     
     return result;

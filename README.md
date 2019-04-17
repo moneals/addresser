@@ -89,6 +89,14 @@ A Node.js library for parsing property addresses. Also includes other address ut
       streetSuffix: 'Ave',
       streetName: 'Boylston' }
 
+    // Handles post office boxes 
+    console.log(addresser.parseAddress("PO BOX 333 SEATTLE WA 98102"));
+    { zipCode: '98102',
+      stateAbbreviation: 'WA',
+      stateName: 'Washington',
+      placeName: 'Seattle',
+      addressLine1: 'PO BOX 333' }
+
     // Return a random valid city 
     console.log(addresser.randomCity());
     { city: 'Irwin',
