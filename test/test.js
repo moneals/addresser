@@ -288,6 +288,19 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("98102");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+    it('should parse an address with a trailing country', function() {
+        var result = addresser.parseAddress("300 BOYLSTON AVE, SEATTLE WA 98102, USA");
+        expect(result.streetNumber).to.equal("300");
+        expect(result.streetName).to.equal("Boylston");
+        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.addressLine1).to.equal("300 Boylston Ave");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Seattle");
+        expect(result.stateAbbreviation).to.equal("WA");
+        expect(result.stateName).to.equal("Washington");
+        expect(result.zipCode).to.equal("98102");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
 });
 
 describe('#randomCity', function() {

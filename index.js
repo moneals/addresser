@@ -92,6 +92,12 @@ module.exports = {
     var addressParts = address.split(/,|\t/);
     
     var result = {};
+
+    // Check if the last section contains country reference (Just supports US for now)
+    var countrySection = addressParts[addressParts.length-1].trim();
+    if (countrySection === 'US' || countrySection === 'USA' || countrySection === 'United States') {
+      addressParts.splice(-1,1);
+    }
     
     // Assume the last address section contains state, zip or both
     var stateString = addressParts[addressParts.length-1].trim();
@@ -215,7 +221,6 @@ module.exports = {
     }
     
     var streetParts = result.addressLine1.split(' ');
-
     
     // Check if directional is last element
     var re = new RegExp('\.\*\\b(?:' + usStreetDirectionalString + ')$', 'i');
