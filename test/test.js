@@ -303,7 +303,6 @@ describe('#parseAddress', function() {
     });
     it('should parse an address with a dot after street abbreviation', function() {
         var result = addresser.parseAddress("200 SUMMIT LAKE DR., VALHALLA NY 10595");
-        console.log(JSON.stringify(result));
         expect(result.streetNumber).to.equal("200");
         expect(result.streetName).to.equal("Summit Lake");
         expect(result.streetSuffix).to.equal("Dr");
@@ -317,7 +316,6 @@ describe('#parseAddress', function() {
     });
     it('should parse an address with a newline separator', function() {
         var result = addresser.parseAddress("200 SUMMIT LAKE DR.\nVALHALLA NY 10595");
-        console.log(JSON.stringify(result));
         expect(result.streetNumber).to.equal("200");
         expect(result.streetName).to.equal("Summit Lake");
         expect(result.streetSuffix).to.equal("Dr");

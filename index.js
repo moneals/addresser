@@ -202,7 +202,6 @@ module.exports = {
       var re = new RegExp('\.\*\\b(?:' + 
         Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
-      console.log(re);
       if (streetString.match(re)) {
         result.addressLine1 = streetString.match(re)[0];
         streetString = streetString.replace(re,"").trim(); // Carve off the first address line
