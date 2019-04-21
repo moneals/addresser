@@ -248,6 +248,13 @@ module.exports = {
       throw 'Can not parse address. Invalid street address data. Input string: ' + address;
     }
     
+    var addressString = result.addressLine1;
+    if (result.hasOwnProperty('addressLine2')) {
+      addressString += ' ' + result.addressLine2;
+    }
+    var idString = addressString + ", " + result.placeName + ", " + result.stateAbbreviation + " " + result.zipCode;
+    result['id'] = encodeURI(idString.replace(/ /g, '-').replace(/\#/g, '-').replace(/\//g, '-').replace(/\./g, '-'));
+      
     return result;
   },
 

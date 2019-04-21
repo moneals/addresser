@@ -347,6 +347,11 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70515");
         expect(result.zipCodePlusFour).to.equal("70515-0538");
     });
+    it('should provide an id for a valid address', function() {
+        var result = addresser.parseAddress("PO BOX 538\nBASILE LA 70515-0538");
+        expect(result.addressLine1).to.equal("PO BOX 538");
+        expect(result.id).to.equal('PO-BOX-538,-Basile,-LA-70515');
+    });
 });
 
 describe('#randomCity', function() {

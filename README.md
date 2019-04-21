@@ -10,21 +10,12 @@ A Node.js library for parsing property addresses. Also includes other address ut
 ## Usage
 
     var addresser = require('addresser');
-
-    console.log(addresser.parseAddress("123 Main St, Conway, SC"));
-    
-    { streetNumber: '123',
-      streetSuffix: 'St',
-      streetName: 'Main',
-      addressLine1: '123 Main St',
-      placeName: 'Conway',
-      stateAbbreviation: 'SC',
-      stateName: 'South Carolina'}
     
     // Isn't confused by duplicate place names
     console.log(addresser.parseAddress("400 South Orange Ave, South Orange , NJ 07079"););
     
-    { zipCode: '07079',
+    { id: '400-South-Orange-Ave,-South-Orange,-NJ-07079',
+      zipCode: '07079',
       stateAbbreviation: 'NJ',
       stateName: 'New Jersey',
       placeName: 'South Orange',
@@ -36,7 +27,8 @@ A Node.js library for parsing property addresses. Also includes other address ut
     // Handles extra whitespace
     console.log(addresser.parseAddress("123 Double  Space    St, Conway, SC 29526"));
     
-    { streetNumber: '123',
+    { id: '123-Double-Space-St,-Conway,-SC-29526',
+      streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Double Space',
       addressLine1: '123 Double Space St',
@@ -48,7 +40,8 @@ A Node.js library for parsing property addresses. Also includes other address ut
     // normalizes to Title Case  
     console.log(addresser.parseAddress("123 Main St, Conway, south carolina 29526-1234"));
     
-    { streetNumber: '123',
+    { id: '123-Main-St,-Conway,-SC-29526',
+      streetNumber: '123',
       streetSuffix: 'St',
       streetName: 'Main',
       addressLine1: '123 Main St',
@@ -57,17 +50,13 @@ A Node.js library for parsing property addresses. Also includes other address ut
       stateName: 'South Carolina',
       zipCode: '29526',
       zipCodePlusFour: '29526-1234'}
-      
-    // Validates correct city and state combinations
-    console.log(addresser.parseAddress("123 Main St, Conway, Texas 29526-1234"));
-    
-    Can not parse address. City not found or is invalid for specified state.
  
     // Handles secondary address lines even without delimiters.
     // Normalizes street types to standard abbreviations.
     console.log(addresser.parseAddress("1301 Columbia College Drive Unit 101 Columbia, SC 29203"));
 
-    { zipCode: '29203',
+    { id: '1301-Columbia-College-Dr-Unit-101,-Columbia,-SC-29203',
+      zipCode: '29203',
       stateAbbreviation: 'SC',
       stateName: 'South Carolina',
       placeName: 'Columbia',
@@ -79,7 +68,8 @@ A Node.js library for parsing property addresses. Also includes other address ut
     
     // Handles trailing street directionals  
     console.log(addresser.parseAddress("300 BOYLSTON AVE E SEATTLE WA 98102"));
-    { zipCode: '98102',
+    { id: '300-Boylston-Ave-E,-Seattle,-WA-98102',
+      zipCode: '98102',
       stateAbbreviation: 'WA',
       stateName: 'Washington',
       placeName: 'Seattle',
@@ -91,7 +81,8 @@ A Node.js library for parsing property addresses. Also includes other address ut
 
     // Handles post office boxes 
     console.log(addresser.parseAddress("PO BOX 333 SEATTLE WA 98102"));
-    { zipCode: '98102',
+    { id: 'PO-BOX-333,-Seattle,-WA-98102',
+      zipCode: '98102',
       stateAbbreviation: 'WA',
       stateName: 'Washington',
       placeName: 'Seattle',
@@ -138,6 +129,11 @@ parseAddress will try to validate that the city provided is valid for the given 
 This allows for more intelligent parsing logic when propert delimiters are not used. 
 parseAddress also normalizes street types to standard abberviations ie. Drive to Dr, Street to St, etc.
 
+parseAddress creates a unique id for all addresses based on the parsed
+values. Currently there is no easy, universal ID available for property
+addresses and this package should help bridge that gap for developers who 
+need to cross reference property data across multiple data sources.
+
 ### getRandomCity
 
 The getRandomCity function can be used to generate a random valid city. This can be helpful
@@ -164,14 +160,6 @@ The cities function returns a JSON object that contains a list of all known citi
           ...
         ]
     }
-
-## Upcoming Features
-
-Once the basic parsing capabilities are working well I intend to add a 
-feature that will assign a unique id to all addresses based on the parsed
-values. Currently there is no easy, universal ID available for property
-addresses and this package should help bridge that gap for developers who 
-need to cross reference property data across multiple data sources.
     
 ## Tests
 
