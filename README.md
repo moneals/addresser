@@ -126,10 +126,9 @@ formatting of the address string but it does assume a general order of street
 data, city data and state data from left to right. parseAddress will normalize
 state names and abbreviations and can recognize state data regardless of case or format.
 
-parseAddress will validate that the city provided is valid for the given state.
-In addition to the data integrity benefits this also allows for more intelligent
-parsing logic. parseAddress also normalizes street types to standard abberviations ie. Drive to Dr,
-Street to St, etc.
+parseAddress will try to validate that the city provided is valid for the given state.
+This allows for more intelligent parsing logic when propert delimiters are not used. 
+parseAddress also normalizes street types to standard abberviations ie. Drive to Dr, Street to St, etc.
 
 ### getRandomCity
 

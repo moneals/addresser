@@ -160,7 +160,8 @@ module.exports = {
       }
     });
     if (!result.placeName) {
-      throw 'Can not parse address. City not found or is invalid for specified state.';
+      result.placeName = placeString;
+      placeString = "";
     }
     
     // Parse the street data

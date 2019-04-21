@@ -139,14 +139,8 @@ describe('#parseAddress', function() {
     it('should validate input is a non-empty string', function() {
         expect(addresser.parseAddress.bind(addresser.parseAddress, "")).to.throw('Argument must be a non-empty string.');
     });
-    it('should not parse an invalid city and state combination', function() {
-        expect(addresser.parseAddress.bind(addresser.parseAddress, "123 Main St, Canyon Lake, SC, 29526-3131")).to.throw('Can not parse address.');
-    });
     it('should not parse an invalid state abbreviation', function() {
         expect(addresser.parseAddress.bind(addresser.parseAddress, "123 Main St, Canyon Lake, XX, 29526-3131")).to.throw('Can not parse address.');
-    });
-    it('should not parse an invalid city name', function() {
-        expect(addresser.parseAddress.bind(addresser.parseAddress, "123 Main St, Nocityisnamedthis, TX, 29526-3131")).to.throw('Can not parse address.');
     });
     it('should parse an address with same street and city name', function() {
         var result = addresser.parseAddress("400 South Orange Ave, South Orange , NJ 07079");
@@ -299,6 +293,19 @@ describe('#parseAddress', function() {
         expect(result.stateAbbreviation).to.equal("WA");
         expect(result.stateName).to.equal("Washington");
         expect(result.zipCode).to.equal("98102");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+    it('should parse a valid address for a small city not in us-cities.json file', function() {
+        var result = addresser.parseAddress("5555 Duffek Dr, Kirby, TX 78219");
+        expect(result.streetNumber).to.equal("5555");
+        expect(result.streetName).to.equal("Duffek");
+        expect(result.streetSuffix).to.equal("Dr");
+        expect(result.addressLine1).to.equal("5555 Duffek Dr");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Kirby");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal("78219");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
 });
