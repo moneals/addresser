@@ -282,6 +282,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("98102");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse an address with a trailing country', function() {
         var result = addresser.parseAddress("300 BOYLSTON AVE, SEATTLE WA 98102, USA");
         expect(result.streetNumber).to.equal("300");
@@ -295,6 +296,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("98102");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse a valid address for a small city not in us-cities.json file', function() {
         var result = addresser.parseAddress("5555 Duffek Dr, Kirby, TX 78219");
         expect(result.streetNumber).to.equal("5555");
@@ -308,6 +310,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("78219");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse an address with a dot after street abbreviation', function() {
         var result = addresser.parseAddress("200 SUMMIT LAKE DR., VALHALLA NY 10595");
         expect(result.streetNumber).to.equal("200");
@@ -321,6 +324,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("10595");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse an address with a newline separator', function() {
         var result = addresser.parseAddress("200 SUMMIT LAKE DR.\nVALHALLA NY 10595");
         expect(result.streetNumber).to.equal("200");
@@ -334,6 +338,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("10595");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse an address with a PO BOX', function() {
         var result = addresser.parseAddress("PO BOX 538\nBASILE LA 70515-0538");
         expect(result.addressLine1).to.equal("PO BOX 538");
@@ -347,10 +352,25 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70515");
         expect(result.zipCodePlusFour).to.equal("70515-0538");
     });
+
     it('should provide an id for a valid address', function() {
         var result = addresser.parseAddress("PO BOX 538\nBASILE LA 70515-0538");
         expect(result.addressLine1).to.equal("PO BOX 538");
         expect(result.id).to.equal('PO-BOX-538,-Basile,-LA-70515');
+    });
+
+    it('should parse a street address ending in pass', function() {
+        var result = addresser.parseAddress("15001 Strathaven Pass, Pflugerville, TX 78660");
+        expect(result.streetNumber).to.equal("15001");
+        expect(result.streetName).to.equal("Strathaven");
+        expect(result.streetSuffix).to.equal("Pass");
+        expect(result.addressLine1).to.equal("15001 Strathaven Pass");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Pflugerville");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal("78660");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
 });
 
