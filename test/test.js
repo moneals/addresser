@@ -353,6 +353,20 @@ describe('#parseAddress', function() {
         expect(result.zipCodePlusFour).to.equal("70515-0538");
     });
 
+    it('should parse an address with a PO BOX written as P.O. DRAWER', function() {
+        var result = addresser.parseAddress("P.O. DRAWER 538\nBASILE LA 70515-0538");
+        expect(result.addressLine1).to.equal("P.O. DRAWER 538");
+        expect(result).to.not.have.property('addressLine2');
+        expect(result).to.not.have.property('streetNumber');
+        expect(result).to.not.have.property('streetName');
+        expect(result).to.not.have.property('streetSuffix');
+        expect(result.placeName).to.equal("Basile");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70515");
+        expect(result.zipCodePlusFour).to.equal("70515-0538");
+    });
+
     it('should provide an id for a valid address', function() {
         var result = addresser.parseAddress("PO BOX 538\nBASILE LA 70515-0538");
         expect(result.addressLine1).to.equal("PO BOX 538");

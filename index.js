@@ -203,7 +203,7 @@ module.exports = {
       var reStreet = new RegExp('\.\*\\b(?:' + 
         Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
-      var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+BOX\\s\\w+', 'i');
+      var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+(BOX|DRAWER)\\s\\w+', 'i');
       if (streetString.match(reStreet)) {
         result.addressLine1 = streetString.match(reStreet)[0];
         streetString = streetString.replace(reStreet,"").trim(); // Carve off the first address line
