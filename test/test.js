@@ -213,12 +213,12 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse an address with a direction following the street type', function() {
-        var result = addresser.parseAddress("1301 Acme Avenue E, Columbia, SC 29203");
+        var result = addresser.parseAddress("1301 Acme Street E, Columbia, SC 29203");
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Acme");
-        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.streetSuffix).to.equal("St");
         expect(result.streetDirection).to.equal("E");
-        expect(result.addressLine1).to.equal("1301 Acme Ave E");
+        expect(result.addressLine1).to.equal("1301 Acme St E");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Columbia");
         expect(result.stateAbbreviation).to.equal("SC");
@@ -227,12 +227,12 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse an address with a lowercase direction following the street type', function() {
-        var result = addresser.parseAddress("1301 Acme Avenue e, Columbia, SC 29203");
+        var result = addresser.parseAddress("1301 Acme Street e, Columbia, SC 29203");
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Acme");
-        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.streetSuffix).to.equal("St");
         expect(result.streetDirection).to.equal("E");
-        expect(result.addressLine1).to.equal("1301 Acme Ave E");
+        expect(result.addressLine1).to.equal("1301 Acme St E");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Columbia");
         expect(result.stateAbbreviation).to.equal("SC");
@@ -241,12 +241,12 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse an address with line 2 incorrectly placed before line 1', function() {
-        var result = addresser.parseAddress("UNIT 101, 1301 Acme Avenue E, Columbia, SC 29203");
+        var result = addresser.parseAddress("UNIT 101, 1301 Acme Street E, Columbia, SC 29203");
         expect(result.streetNumber).to.equal("1301");
         expect(result.streetName).to.equal("Acme");
-        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.streetSuffix).to.equal("St");
         expect(result.streetDirection).to.equal("E");
-        expect(result.addressLine1).to.equal("1301 Acme Ave E");
+        expect(result.addressLine1).to.equal("1301 Acme St E");
         expect(result.addressLine2).to.equal("UNIT 101");
         expect(result.placeName).to.equal("Columbia");
         expect(result.stateAbbreviation).to.equal("SC");
@@ -269,12 +269,12 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
     it('should parse an address with a trailing directional, all caps, and no delimiters', function() {
-        var result = addresser.parseAddress("300 BOYLSTON AVE E SEATTLE WA 98102");
+        var result = addresser.parseAddress("300 BOYLSTON ST E SEATTLE WA 98102");
         expect(result.streetNumber).to.equal("300");
         expect(result.streetName).to.equal("Boylston");
-        expect(result.streetSuffix).to.equal("Ave");
+        expect(result.streetSuffix).to.equal("St");
         expect(result.streetDirection).to.equal("E");
-        expect(result.addressLine1).to.equal("300 Boylston Ave E");
+        expect(result.addressLine1).to.equal("300 Boylston St E");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Seattle");
         expect(result.stateAbbreviation).to.equal("WA");
@@ -385,6 +385,46 @@ describe('#parseAddress', function() {
         expect(result.stateName).to.equal("Texas");
         expect(result.zipCode).to.equal("78660");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+    
+    it('should parse a street address with "Ave C" style street name', function() {
+        var result = addresser.parseAddress("826 N Ave C, Crowley, LA 70526");
+        expect(result.streetNumber).to.equal("826");
+        expect(result.streetName).to.equal("N Ave C");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("826 N Ave C");
+        expect(result).to.not.have.property('addressLine2');;
+        expect(result.placeName).to.equal("Crowley");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70526");
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    it('should parse a street address with "Avenue N" style street name', function() {
+        var result = addresser.parseAddress("826 N Avenue N, Crowley, LA 70526");
+        expect(result.streetNumber).to.equal("826");
+        expect(result.streetName).to.equal("N Ave N");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("826 N Ave N");
+        expect(result).to.not.have.property('addressLine2');;
+        expect(result.placeName).to.equal("Crowley");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70526");
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    it('should parse a street address with "Ave. b" style street name', function() {
+        var result = addresser.parseAddress("826 N Ave. b, Crowley, LA 70526");
+        expect(result.streetNumber).to.equal("826");
+        expect(result.streetName).to.equal("N Ave B");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("826 N Ave B");
+        expect(result).to.not.have.property('addressLine2');;
+        expect(result.placeName).to.equal("Crowley");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70526");
+        expect(result).to.not.have.property("zipCodePlusFour");
     });
 });
 

@@ -204,7 +204,35 @@ module.exports = {
         Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
       var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+(BOX|DRAWER)\\s\\w+', 'i');
-      if (streetString.match(reStreet)) {
+      var reAveLetter = new RegExp('\.\*\\b(ave.?|avenue)\.\*\\b[a-zA-Z]\.\*\\b', 'i');
+      if (streetString.match(reAveLetter)) {
+        result.addressLine1 = streetString.match(reAveLetter)[0];
+        streetString = streetString.replace(reAveLetter,"").trim(); // Carve off the first address line
+        if (streetString && streetString.length > 0) {
+          // Check if line2 data was already parsed
+          if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
+            throw 'Can not parse address. Too many address lines. Input string: ' + address;
+          } else {
+            result.addressLine2 = streetString;
+          }
+        }
+        
+        var streetParts = result.addressLine1.split(' ');
+    
+        // Assume type is last and number is first   
+        result.streetNumber = streetParts[0]; // Assume number is first element
+
+        // Normalize to Ave
+        streetParts[streetParts.length-2] = streetParts[streetParts.length-2].replace(/^(ave.?|avenue)$/i, 'Ave');
+
+        //result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+        result.streetName = streetParts[1]; // Assume street name is everything in the middle
+        for (var i = 2; i <= streetParts.length-1; i++) {
+          result.streetName = result.streetName + " " + streetParts[i];
+        }
+        result.streetName = toTitleCase(result.streetName);
+        result.addressLine1 = [result.streetNumber, result.streetName].join(" ");
+      } else if (streetString.match(reStreet)) {
         result.addressLine1 = streetString.match(reStreet)[0];
         streetString = streetString.replace(reStreet,"").trim(); // Carve off the first address line
         if (streetString && streetString.length > 0) {
