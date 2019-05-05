@@ -413,6 +413,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70526");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
+    
     it('should parse a street address with "Ave. b" style street name', function() {
         var result = addresser.parseAddress("826 N Ave. b, Crowley, LA 70526");
         expect(result.streetNumber).to.equal("826");
@@ -424,6 +425,48 @@ describe('#parseAddress', function() {
         expect(result.stateAbbreviation).to.equal("LA");
         expect(result.stateName).to.equal("Louisiana");
         expect(result.zipCode).to.equal("70526");
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
+    it('should parse a street address with "Ave. b" style street name with non delimited second address line', function() {
+        var result = addresser.parseAddress("826 N Ave. b Unit 101, Crowley, LA 70526");
+        expect(result.streetNumber).to.equal("826");
+        expect(result.streetName).to.equal("N Ave B");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("826 N Ave B");
+        expect(result.addressLine2).to.equal("Unit 101");
+        expect(result.placeName).to.equal("Crowley");
+        expect(result.stateAbbreviation).to.equal("LA");
+        expect(result.stateName).to.equal("Louisiana");
+        expect(result.zipCode).to.equal("70526");
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
+    it('should parse a street address without a normal suffix like 123 Texas Gold', function() {
+        var result = addresser.parseAddress("12939 Texas Gold, San Antonio, TX 78253");
+        expect(result.streetNumber).to.equal("12939");
+        expect(result.streetName).to.equal("Texas Gold");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal('12939 Texas Gold');
+        expect(result).to.not.have.property('addressLine2');;
+        expect(result.placeName).to.equal("San Antonio");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal('78253');
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
+    it('should parse a street address without a normal suffix and 2nd address line like 123 Texas Gold Unit 101', function() {
+        var result = addresser.parseAddress("12939 Texas Gold Unit 101, San Antonio, TX 78253");
+        expect(result.streetNumber).to.equal("12939");
+        expect(result.streetName).to.equal("Texas Gold");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("12939 Texas Gold");
+        expect(result.addressLine2).to.equal("Unit 101");
+        expect(result.placeName).to.equal("San Antonio");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 });

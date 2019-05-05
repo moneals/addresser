@@ -204,7 +204,8 @@ module.exports = {
         Object.keys(usStreetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
       var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+(BOX|DRAWER)\\s\\w+', 'i');
-      var reAveLetter = new RegExp('\.\*\\b(ave.?|avenue)\.\*\\b[a-zA-Z]\.\*\\b', 'i');
+      var reAveLetter = new RegExp('\.\*\\b(ave.?|avenue)\.\*\\b[a-zA-Z]\\b', 'i');
+      var reNoSuffix = new RegExp('\\b\\d+\\s[a-zA-Z0-9_ ]+\\b', 'i');
       if (streetString.match(reAveLetter)) {
         result.addressLine1 = streetString.match(reAveLetter)[0];
         streetString = streetString.replace(reAveLetter,"").trim(); // Carve off the first address line
@@ -269,6 +270,22 @@ module.exports = {
       } else if (streetString.match(rePO)) {
         result.addressLine1 = streetString.match(rePO)[0];
         streetString = streetString.replace(rePO,"").trim(); // Carve off the first address line
+      } else if (streetString.match(reNoSuffix)) {
+        // Check for a line2 prefix followed by a single word. If found peel that off as addressLine2
+        var reLine2 = new RegExp('\\b(' + usLine2String + ')\\.?\\s[a-zA-Z0-9_\-]+$','i');
+        if (streetString.match(reLine2)) {
+          result.addressLine2 = streetString.match(reLine2)[0];
+          streetString = streetString.replace(reLine2,"").trim(); // Carve off the first address line
+        }
+        
+        result.addressLine1 = streetString.match(reNoSuffix)[0];
+        streetString = streetString.replace(reNoSuffix,"").trim(); // Carve off the first address line
+        var streetParts = result.addressLine1.split(' ');
+    
+        // Assume type is last and number is first   
+        result.streetNumber = streetParts[0]; // Assume number is first element
+        streetParts.shift(); // Remove the first element
+        result.streetName = streetParts.join(' '); // Assume street name is everything else
       } else {
         throw 'Can not parse address. Invalid street address data. Input string: ' + address;
       }
