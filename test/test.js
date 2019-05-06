@@ -469,6 +469,21 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
+    
+    it('should parse an Interstate address with a # unit', function() {
+        var result = addresser.parseAddress("10701 S Interstate 35 # 35, Austin, TX");
+        expect(result.streetNumber).to.equal("10701");
+        expect(result.streetName).to.equal("S Interstate 35");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("10701 S Interstate 35");
+        expect(result.addressLine2).to.equal("# 35");
+        expect(result.placeName).to.equal("Austin");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
 });
 
 describe('#randomCity', function() {

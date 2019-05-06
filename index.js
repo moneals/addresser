@@ -77,7 +77,8 @@ var usLine2Prefixes = {
     'TRLR'      : 'TRLR',
     'UNIT'      :	'UNIT',
     'UPPER'     : 'UPPR',
-    'UPPR'      : 'UPPR'
+    'UPPR'      : 'UPPR',
+    '#'         : '#',
 }
 
 module.exports = {
@@ -272,9 +273,9 @@ module.exports = {
         streetString = streetString.replace(rePO,"").trim(); // Carve off the first address line
       } else if (streetString.match(reNoSuffix)) {
         // Check for a line2 prefix followed by a single word. If found peel that off as addressLine2
-        var reLine2 = new RegExp('\\b(' + usLine2String + ')\\.?\\s[a-zA-Z0-9_\-]+$','i');
+        var reLine2 = new RegExp('\\s(' + usLine2String + ')\\.?\\s[a-zA-Z0-9_\-]+$','i');
         if (streetString.match(reLine2)) {
-          result.addressLine2 = streetString.match(reLine2)[0];
+          result.addressLine2 = streetString.match(reLine2)[0].trim();
           streetString = streetString.replace(reLine2,"").trim(); // Carve off the first address line
         }
         
