@@ -161,7 +161,7 @@ module.exports = {
       }
     });
     if (!result.placeName) {
-      result.placeName = placeString;
+      result.placeName = toTitleCase(placeString);
       placeString = "";
     }
     
@@ -255,16 +255,24 @@ module.exports = {
         
         // Assume type is last and number is first   
         result.streetNumber = streetParts[0]; // Assume number is first element
-
-        // Remove '.' if it follows streetSuffix
-        streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
-        result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+        
+        // If there are only 2 street parts (number and name) then its likely missing a "real" suffix and the street name just happened to match a suffix
+        if (streetParts.length > 2) {
+          // Remove '.' if it follows streetSuffix
+          streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
+          result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+        }
+        
         result.streetName = streetParts[1]; // Assume street name is everything in the middle
         for (var i = 2; i < streetParts.length-1; i++) {
           result.streetName = result.streetName + " " + streetParts[i];
         }
         result.streetName = toTitleCase(result.streetName);
-        result.addressLine1 = [result.streetNumber, result.streetName, result.streetSuffix].join(" ");
+        result.addressLine1 = [result.streetNumber, result.streetName].join(" ");
+        
+        if (result.hasOwnProperty('streetSuffix')) {
+          result.addressLine1 = result.addressLine1 + ' ' + result.streetSuffix;
+        }
         if (result.streetDirection) {
           result.addressLine1 = result.addressLine1 + ' ' + result.streetDirection;
         }

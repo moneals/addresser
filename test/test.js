@@ -582,7 +582,7 @@ describe('#parseAddress', function() {
         expect(result).to.not.have.property("zipCodePlusFour");
     });
     
-    it('should parse street name that has a leading directional and is just a number', function() {
+    it('should parse "123 Rue Dauphine style address', function() {
         var result = addresser.parseAddress("625 Rue Dauphine, Eunice, LA");
         expect(result.streetNumber).to.equal("625");
         expect(result.streetName).to.equal("Rue Dauphine");
@@ -607,6 +607,20 @@ describe('#parseAddress', function() {
         expect(result.stateAbbreviation).to.equal("CA");
         expect(result.stateName).to.equal("California");
         expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
+    it('should parse a street name with no suffix but the street name itself matches a suffix', function() {
+        var result = addresser.parseAddress("1010 PINE, 9E-6-01\nST. LOUIS MO 63101");
+        expect(result.streetNumber).to.equal("1010");
+        expect(result.streetName).to.equal("Pine");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("1010 Pine");
+        expect(result.addressLine2).to.equal("9E-6-01");
+        expect(result.placeName).to.equal("St. Louis");
+        expect(result.stateAbbreviation).to.equal("MO");
+        expect(result.stateName).to.equal("Missouri");
+        expect(result.zipCode).to.equal("63101");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 });
