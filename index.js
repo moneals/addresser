@@ -96,7 +96,7 @@ module.exports = {
 
     // Check if the last section contains country reference (Just supports US for now)
     var countrySection = addressParts[addressParts.length-1].trim();
-    if (countrySection === 'US' || countrySection === 'USA' || countrySection === 'United States') {
+    if (countrySection === 'US' || countrySection === 'USA' || countrySection === 'United States' || countrySection === 'Canada') {
       addressParts.splice(-1,1);
     }
     
