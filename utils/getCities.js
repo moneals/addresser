@@ -41,9 +41,22 @@ function getDataForCountry(country_code){
       });
 
     });
+}
 
-
+function mergeFiles(inputs, output){
+  let answer = inputs.reduce(function(result, current){
+    let items = JSON.parse(fs.readFileSync(current));
+    return Object.assign(result, items);
+  }, {});
+  fs.writeFile(output, JSON.stringify(answer), 'utf8', function(){
+    console.log(answer);
+  });
 }
 
 getDataForCountry("CA");
 getDataForCountry("US");
+
+mergeFiles(["../data/CA-cities.json", "../data/US-cities.json"], "../data/cities.json");
+mergeFiles(["../data/CA-states.json", "../data/US-states.json"], "../data/states.json");
+
+
