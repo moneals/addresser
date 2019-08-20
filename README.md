@@ -113,7 +113,7 @@ A Node.js library for parsing property addresses. Also includes other address ut
         ]
     } 
 
-NOTE: Currently addresser supports only US addresses.  
+NOTE: Currently addresser supports only US & Canada addresses.  
 
 ## Functions
 
