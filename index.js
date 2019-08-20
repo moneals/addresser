@@ -1,6 +1,6 @@
-var usStates = require('./data/us-states.json');
+var usStates = require('./data/states.json');
 var usStreetTypes = require('./data/us-street-types.json');
-var usCities = require('./data/us-cities.json');
+var usCities = require('./data/cities.json');
 
 'use strict';
 
@@ -96,7 +96,7 @@ module.exports = {
 
     // Check if the last section contains country reference (Just supports US for now)
     var countrySection = addressParts[addressParts.length-1].trim();
-    if (countrySection === 'US' || countrySection === 'USA' || countrySection === 'United States') {
+    if (countrySection === 'US' || countrySection === 'USA' || countrySection === 'United States' || countrySection === 'Canada') {
       addressParts.splice(-1,1);
     }
     
@@ -111,6 +111,9 @@ module.exports = {
       result.zipCode = zipString.substring(0,5);
       result.zipCodePlusFour = zipString;
       stateString = stateString.substring(0, stateString.length - 10).trim();
+    } else if(stateString.match(/[A-Z]\d[A-Z] ?\d[A-Z]\d/)){
+      result.zipCode = stateString.match(/[A-Z]\d[A-Z] ?\d[A-Z]\d/)[0];
+      stateString = stateString.substring(0, stateString.length - result.zipCode.length).trim();
     }
     // Parse and remove state
     if (stateString.length > 0) { // Check if anything is left of last section
