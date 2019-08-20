@@ -132,7 +132,9 @@ parseAddress also normalizes street types to standard abberviations ie. Drive to
 parseAddress creates a unique id for all addresses based on the parsed
 values. Currently there is no easy, universal ID available for property
 addresses and this package should help bridge that gap for developers who 
-need to cross reference property data across multiple data sources.
+need to cross reference property data across multiple data sources. An id is
+generated only if all the address components are present including street address,
+city, state and zipcode.
 
 ### getRandomCity
 

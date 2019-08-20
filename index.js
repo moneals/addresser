@@ -309,8 +309,10 @@ module.exports = {
     if (result.hasOwnProperty('addressLine2')) {
       addressString += ' ' + result.addressLine2;
     }
-    var idString = addressString + ", " + result.placeName + ", " + result.stateAbbreviation + " " + result.zipCode;
-    result['id'] = encodeURI(idString.replace(/ /g, '-').replace(/\#/g, '-').replace(/\//g, '-').replace(/\./g, '-'));
+    if (addressString && result.hasOwnProperty("placeName") && result.hasOwnProperty("stateAbbreviation") && result.hasOwnProperty("zipCode")) {
+      var idString = addressString + ", " + result.placeName + ", " + result.stateAbbreviation + " " + result.zipCode;
+      result['id'] = encodeURI(idString.replace(/ /g, '-').replace(/\#/g, '-').replace(/\//g, '-').replace(/\./g, '-'));
+    }
       
     return result;
   },

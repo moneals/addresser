@@ -372,6 +372,21 @@ describe('#parseAddress', function() {
         expect(result.addressLine1).to.equal("PO BOX 538");
         expect(result.id).to.equal('PO-BOX-538,-Basile,-LA-70515');
     });
+    
+    it('should not provide an id if mandatory components are not present', function() {
+        var result = addresser.parseAddress("1010 PINE, 9E-6-01\nST. LOUIS MO");
+        expect(result.streetNumber).to.equal("1010");
+        expect(result.streetName).to.equal("Pine");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("1010 Pine");
+        expect(result.addressLine2).to.equal("9E-6-01");
+        expect(result.placeName).to.equal("St. Louis");
+        expect(result.stateAbbreviation).to.equal("MO");
+        expect(result.stateName).to.equal("Missouri");
+        expect(result).to.not.have.property("zipCode");
+        expect(result).to.not.have.property("zipCodePlusFour");
+        expect(result).to.not.have.property("id");
+    });
 
     it('should parse a street address ending in pass', function() {
         var result = addresser.parseAddress("15001 Strathaven Pass, Pflugerville, TX 78660");
@@ -623,6 +638,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("63101");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
+    
     it('should parse a simple Canadian Address without zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON");
         expect(result.streetNumber).to.equal("123");
