@@ -1,6 +1,10 @@
-var usStates = require('./data/states.json');
+var allStates = require('./data/states.json');
 var usStreetTypes = require('./data/us-street-types.json');
-var usCities = require('./data/cities.json');
+var allCities = require('./data/cities.json');
+var usStates = require('./data/us-states.json');
+var usCities = require('./data/us-cities.json');
+
+
 
 'use strict';
 
@@ -123,18 +127,18 @@ module.exports = {
       stateString = addressParts[addressParts.length-1].trim();
     }
     // First check for just an Abbreviation
-    if (stateString.length == 2 && getKeyByValue(usStates,stateString.toUpperCase())) {
+    if (stateString.length == 2 && getKeyByValue(allStates,stateString.toUpperCase())) {
       result.stateAbbreviation = stateString.toUpperCase();
-      result.stateName = toTitleCase(getKeyByValue(usStates,stateString.toUpperCase()));
+      result.stateName = toTitleCase(getKeyByValue(allStates,stateString.toUpperCase()));
       stateString = stateString.substring(0, stateString.length - 2);
     } else {
       // Next check if the state string ends in state name or abbeviation
       // (state abbreviation must be preceded by a space to ensure accuracy)
-      for (var key in usStates) {
-        var re = new RegExp(" " + usStates[key] + "$|" + key + "$", "i");
+      for (var key in allStates) {
+        var re = new RegExp(" " + allStates[key] + "$|" + key + "$", "i");
         if (stateString.match(re)) {
           stateString = stateString.replace(re,"");
-          result.stateAbbreviation = usStates[key];
+          result.stateAbbreviation = allStates[key];
           result.stateName = toTitleCase(key);
           break;
         }
@@ -154,7 +158,7 @@ module.exports = {
       placeString = addressParts[addressParts.length-1].trim();
     }
     result.placeName = "";
-    usCities[result.stateAbbreviation].some(function(element) {
+    allCities[result.stateAbbreviation].some(function(element) {
       var re = new RegExp(element + "$", "i");
       if (placeString.match(re)) {
         placeString = placeString.replace(re,""); // Carve off the place name
@@ -307,10 +311,11 @@ module.exports = {
     
     var addressString = result.addressLine1;
     if (result.hasOwnProperty('addressLine2')) {
-      addressString += ' ' + result.addressLine2;
+      addressString += ', ' + result.addressLine2;
     }
     if (addressString && result.hasOwnProperty("placeName") && result.hasOwnProperty("stateAbbreviation") && result.hasOwnProperty("zipCode")) {
       var idString = addressString + ", " + result.placeName + ", " + result.stateAbbreviation + " " + result.zipCode;
+      result['formattedAddress'] = idString;
       result['id'] = encodeURI(idString.replace(/ /g, '-').replace(/\#/g, '-').replace(/\//g, '-').replace(/\./g, '-'));
     }
       

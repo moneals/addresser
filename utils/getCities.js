@@ -56,7 +56,7 @@ function mergeFiles(inputs, output){
 getDataForCountry("CA");
 getDataForCountry("US");
 
-mergeFiles(["../data/CA-cities.json", "../data/US-cities.json"], "../data/cities.json");
-mergeFiles(["../data/CA-states.json", "../data/US-states.json"], "../data/states.json");
+mergeFiles(["../data/us-cities.json", "../data/ca-cities.json"], "../data/cities.json");
+mergeFiles(["../data/us-states.json", "../data/ca-states.json"], "../data/states.json");
 
 

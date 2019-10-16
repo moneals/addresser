@@ -373,6 +373,13 @@ describe('#parseAddress', function() {
         expect(result.id).to.equal('PO-BOX-538,-Basile,-LA-70515');
     });
     
+    it('should provide an id for a valid address with second address line', function() {
+        var result = addresser.parseAddress("123 Main St Unit 101, Conway, SC 29526");
+        expect(result.addressLine1).to.equal("123 Main St");
+        expect(result.addressLine2).to.equal("Unit 101");
+        expect(result.id).to.equal('123-Main-St,-Unit-101,-Conway,-SC-29526');
+    });
+    
     it('should not provide an id if mandatory components are not present', function() {
         var result = addresser.parseAddress("1010 PINE, 9E-6-01\nST. LOUIS MO");
         expect(result.streetNumber).to.equal("1010");
@@ -639,6 +646,36 @@ describe('#parseAddress', function() {
         expect(result).to.not.have.property("zipCodePlusFour");
     });
     
+    it('should return a formattedAddress field', function() {
+        var result = addresser.parseAddress("12939 Texas Gold, San Antonio, TX 78253");
+        expect(result.streetNumber).to.equal("12939");
+        expect(result.streetName).to.equal("Texas Gold");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("12939 Texas Gold");
+        expect(result).to.not.have.property('addressLine2')
+        expect(result.formattedAddress).to.equal("12939 Texas Gold, San Antonio, TX 78253");
+        expect(result.placeName).to.equal("San Antonio");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal('78253');
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
+    it('should return a formattedAddress field when a second address line is provided', function() {
+        var result = addresser.parseAddress("12939 Live Oak Street Unit 101, San Antonio, TX 78253");
+        expect(result.streetNumber).to.equal("12939");
+        expect(result.streetName).to.equal("Live Oak");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.addressLine1).to.equal("12939 Live Oak St");
+        expect(result.addressLine2).to.equal("Unit 101");
+        expect(result.formattedAddress).to.equal("12939 Live Oak St, Unit 101, San Antonio, TX 78253");
+        expect(result.placeName).to.equal("San Antonio");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal('78253');
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
     it('should parse a simple Canadian Address without zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON");
         expect(result.streetNumber).to.equal("123");
@@ -653,6 +690,7 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCode")).to.equal(false);
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+    
     it('should parse a simple Canadian Address with zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON M3K5K9");
         expect(result.streetNumber).to.equal("123");
