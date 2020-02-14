@@ -310,7 +310,7 @@ module.exports = {
     }
     
     var addressString = result.addressLine1;
-    if (result.hasOwnProperty('addressLine2')) {
+    if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
       addressString += ', ' + result.addressLine2;
     }
     if (addressString && result.hasOwnProperty("placeName") && result.hasOwnProperty("stateAbbreviation") && result.hasOwnProperty("zipCode")) {
