@@ -5,11 +5,15 @@ declare module "addresser" {
 	export function cities(): IStateCities;
 
 	export interface IParsedAddress {
-		zipCode: string;
+		zipCode: string | undefined;
+		zipCodePlusFour: string | undefined;
+		formattedAddress: string | undefined;
 		stateAbbreviation: string;
 		stateName: string;
 		placeName: string;
 		addressLine1: string;
+		addressLine2: string | undefined;
+		streetDirection: string | undefined;
 		streetNumber: string;
 		streetSuffix: string;
 		streetName: string;
