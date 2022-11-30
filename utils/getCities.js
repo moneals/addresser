@@ -24,8 +24,13 @@ function getDataForCountry(country_code){
       citiesData.forEach(function(element) {
         var cityData = element.split('\t');
         //console.log(cityData[2] + ", " + cityData[4]);
+        let city = cityData[2]; // Default US data
+        // If Canadian data, it is structured differently
+        if (country_code_upper === 'CA') {
+          city = cityData[7] || cityData[5] || cityData[2];
+        }        
         if (cityData[4] && cityData[4].length == 2 && cityHash.hasOwnProperty(cityData[4])) {
-          cityHash[cityData[4]].push(cityData[2]);
+          cityHash[cityData[4]].push(city);
         }
       });
       //Remove duplicates and sort from longest to shortest
