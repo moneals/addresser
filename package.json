@@ -1,6 +1,6 @@
 {
   "name": "@solinkcorp/addresser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Street Address Parser for Node.js",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
   },
   "publishConfig": {
     "@solinkcorp:registry": "https://npm.pkg.github.com"
-  },  
+  },
   "keywords": [
     "address",
     "parser",
