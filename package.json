@@ -9,7 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moneals/addresser.git"
+    "url": "git@github.com:SolinkCorp/addresser.git"
+  },
+  "publishConfig": {
+    "@solinkcorp:registry": "https://npm.pkg.github.com"
   },
   "keywords": [
     "address",

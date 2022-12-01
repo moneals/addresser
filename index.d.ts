@@ -1,4 +1,4 @@
-declare module "addresser" {
+declare module "@solinkcorp/addresser" {
 
 	export function parseAddress(addressString: string): IParsedAddress;
 	export function getRandomCity(): { city: string, state: string};
