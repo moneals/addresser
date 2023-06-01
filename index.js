@@ -158,6 +158,7 @@ module.exports = {
       placeString = addressParts[addressParts.length-1].trim();
     }
     result.placeName = "";
+   
     allCities[result.stateAbbreviation].some(function(element) {
       var re = new RegExp(element + "$", "i");
       if (placeString.match(re)) {
@@ -213,7 +214,7 @@ module.exports = {
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
       var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+(BOX|DRAWER)\\s\\w+', 'i');
       var reAveLetter = new RegExp('\.\*\\b(ave.?|avenue)\.\*\\b[a-zA-Z]\\b', 'i');
-      var reNoSuffix = new RegExp('\\b\\d+\\s[a-zA-Z0-9_ ]+\\b', 'i');
+      var reNoSuffix = new RegExp('\\b\\d+[a-z]?\\s[a-zA-Z0-9_ ]+\\b', 'i');
       if (streetString.match(reAveLetter)) {
         result.addressLine1 = streetString.match(reAveLetter)[0];
         streetString = streetString.replace(reAveLetter,"").trim(); // Carve off the first address line
