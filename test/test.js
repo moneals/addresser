@@ -929,3 +929,22 @@ describe('##cities', function() {
         expect(result['TX'].includes('ThisCityCannot143234234234234PossiblyExist')).to.be.false;
     });
 });
+
+describe('#canadianstreettypes', function() {
+    it('should parse close', function() {
+        var result = addresser.parseAddress("111 Madeup Close NW, Edmonton, AB A1A 1A1");
+        expect(result.streetSuffix).to.equal("Cl");
+    });
+    it('should parse link', function() {
+        var result = addresser.parseAddress("111-222 Madeup Link NW, Edmonton, AB A1A 1A1");
+        expect(result.streetSuffix).to.equal("Lk");
+    });
+    it('should parse promenade', function() {
+        var result = addresser.parseAddress("1111 Madeup Promenade NW, Edmonton, AB A1A 1A1");
+        expect(result.streetSuffix).to.equal("Prm");
+    });
+    it('should parse wynd', function() {
+        var result = addresser.parseAddress("111 Madeup Wynd NW, Edmonton, AB A1A 1A1");
+        expect(result.streetSuffix).to.equal("Wn");
+    });
+});
