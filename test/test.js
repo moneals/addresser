@@ -860,6 +860,21 @@ describe('#parseAddress', function() {
         expect(result).to.not.have.property("zipCodePlusFour");
     });
     
+    it('should return a formattedAddress field when a second address line is empty', function() {
+        var result = addresser.parseAddress("12939 Live Oak Street,, San Antonio, TX 78253");
+        expect(result.streetNumber).to.equal("12939");
+        expect(result.streetName).to.equal("Live Oak");
+        expect(result.streetSuffix).to.equal("St");
+        expect(result.addressLine1).to.equal("12939 Live Oak St");
+        expect(result.addressLine2).to.equal("");
+        expect(result.formattedAddress).to.equal("12939 Live Oak St, San Antonio, TX 78253");
+        expect(result.placeName).to.equal("San Antonio");
+        expect(result.stateAbbreviation).to.equal("TX");
+        expect(result.stateName).to.equal("Texas");
+        expect(result.zipCode).to.equal('78253');
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
+    
     it('should parse a simple Canadian Address without zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON");
         expect(result.streetNumber).to.equal("123");
