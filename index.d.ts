@@ -13,6 +13,7 @@ declare module "addresser" {
 		streetNumber: string;
 		streetSuffix: string;
 		streetName: string;
+		streetDirection: string;
 		id: string;
 	}
 
