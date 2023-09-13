@@ -268,7 +268,13 @@ module.exports = {
         if (streetParts.length > 2) {
           // Remove '.' if it follows streetSuffix
           streetParts[streetParts.length-1] = streetParts[streetParts.length-1].replace(/\.$/, '');
-          result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+          // check if this is found: had an error with   P.O. BOX 12345  DEPT-PT-XY-12345 as the address line that went into streetParts: the DEPT-PT wasn't found in the street types listing
+          if(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]){
+										  result.streetSuffix = toTitleCase(usStreetTypes[streetParts[streetParts.length-1].toLowerCase()]);
+										}else{
+												// add it back to address line 2
+												result.addressLine2 = streetParts[streetParts.length-1]+result.addressLine2;
+										}
         }
         
         result.streetName = streetParts[1]; // Assume street name is everything in the middle
