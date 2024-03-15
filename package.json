@@ -11,6 +11,10 @@
     "type": "git",
     "url": "git+https://github.com/moneals/addresser.git"
   },
+  "files": [
+    "index.js",
+    "data"
+  ],
   "keywords": [
     "address",
     "parser",
