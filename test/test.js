@@ -505,6 +505,20 @@ describe('#parseAddress', function() {
         expect(result).to.not.have.property("zipCode");        
         expect(result).to.not.have.property("zipCodePlusFour");
     });
+
+    it('should parse an address1 ending with a US Route', function() {
+        var result = addresser.parseAddress("737 US-42, Ashland, OH 44805");
+        expect(result.streetNumber).to.equal("737");
+        expect(result.streetName).to.equal("US-42");
+        expect(result).to.not.have.property('streetSuffix')
+        expect(result.addressLine1).to.equal("737 US-42");
+        expect(result).to.not.have.property('addressLine2')
+        expect(result.placeName).to.equal("Ashland");
+        expect(result.stateAbbreviation).to.equal("OH");
+        expect(result.stateName).to.equal("Ohio");
+        expect(result.zipCode).to.equal("44805")
+        expect(result).to.not.have.property("zipCodePlusFour");
+    });
     
     it('should parse FM number style road names', function() {
         var result = addresser.parseAddress("11434 W FM 471, San Antonio, TX");
