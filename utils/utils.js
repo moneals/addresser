@@ -1,28 +1,28 @@
-export function getKeyByValue(object, value) {
+function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
 }
 
-export function toTitleCase(str) {
+function toTitleCase(str) {
     return str.replace(/\w\S*/g, function(txt){
         return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
 }
 
-export function createStreetDirectionalString(streetDirectional) {
+function createStreetDirectionalString(streetDirectional) {
     return Object.keys(streetDirectional).map(x => streetDirectional[x]).join('|');
 }
 
-export function createLine2PrefixString(line2Prefixes) {
+function createLine2PrefixString(line2Prefixes) {
     return Object.keys(line2Prefixes).join('|');
 }
 
-export function createStreetTypeRegex(streetTypes, streetDirectionalString) {
+function createStreetTypeRegex(streetTypes, streetDirectionalString) {
     return new RegExp('.*\\b(?:' + 
         Object.keys(streetTypes).join('|') + ')\\b\\.?' + 
         '( +(?:' + streetDirectionalString + ')\\b)?', 'i');
 }
 
-export function handleAddressPart(addressParts, stateString) {
+function handleAddressPart(addressParts, stateString) {
     if (stateString.length > 0) {
         addressParts[addressParts.length-1] = stateString;
         return addressParts[addressParts.length-1];
@@ -33,7 +33,7 @@ export function handleAddressPart(addressParts, stateString) {
     }
 }
 
-export function findCityInList(cityList, placeString) {
+function findCityInList(cityList, placeString) {
     let foundCity = '';
     let remainingString = placeString;
     
@@ -52,7 +52,7 @@ export function findCityInList(cityList, placeString) {
     return { foundCity, remainingString };
 }
 
-export function buildAddressLine1(streetNumber, streetName, streetSuffix, streetDirection) {
+function buildAddressLine1(streetNumber, streetName, streetSuffix, streetDirection) {
     let addressLine1 = streetNumber;
     if (streetName) {
         addressLine1 += ' ' + streetName;
@@ -65,3 +65,14 @@ export function buildAddressLine1(streetNumber, streetName, streetSuffix, street
     }
     return addressLine1;
 }
+
+module.exports = {
+    getKeyByValue,
+    toTitleCase,
+    createStreetDirectionalString,
+    createLine2PrefixString,
+    createStreetTypeRegex,
+    handleAddressPart,
+    findCityInList,
+    buildAddressLine1
+};
