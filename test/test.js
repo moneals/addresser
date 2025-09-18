@@ -372,14 +372,14 @@ describe('#parseAddress', function() {
         expect(result.addressLine1).to.equal("PO BOX 538");
         expect(result.id).to.equal('PO-BOX-538,-Basile,-LA-70515');
     });
-    
+
     it('should provide an id for a valid address with second address line', function() {
         var result = addresser.parseAddress("123 Main St Unit 101, Conway, SC 29526");
         expect(result.addressLine1).to.equal("123 Main St");
         expect(result.addressLine2).to.equal("Unit 101");
         expect(result.id).to.equal('123-Main-St,-Unit-101,-Conway,-SC-29526');
     });
-    
+
     it('should not provide an id if mandatory components are not present', function() {
         var result = addresser.parseAddress("1010 PINE, 9E-6-01\nST. LOUIS MO");
         expect(result.streetNumber).to.equal("1010");
@@ -408,7 +408,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("78660");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
-    
+
     it('should parse a street address with "Ave C" style street name', function() {
         var result = addresser.parseAddress("826 N Ave C, Crowley, LA 70526");
         expect(result.streetNumber).to.equal("826");
@@ -435,7 +435,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70526");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a street address with "Ave. b" style street name', function() {
         var result = addresser.parseAddress("826 N Ave. b, Crowley, LA 70526");
         expect(result.streetNumber).to.equal("826");
@@ -449,7 +449,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70526");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a street address with "Ave. b" style street name with non delimited second address line', function() {
         var result = addresser.parseAddress("826 N Ave. b Unit 101, Crowley, LA 70526");
         expect(result.streetNumber).to.equal("826");
@@ -463,7 +463,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("70526");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a street address without a normal suffix like 123 Texas Gold', function() {
         var result = addresser.parseAddress("12939 Texas Gold, San Antonio, TX 78253");
         expect(result.streetNumber).to.equal("12939");
@@ -477,7 +477,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a street address without a normal suffix and 2nd address line like 123 Texas Gold Unit 101', function() {
         var result = addresser.parseAddress("12939 Texas Gold Unit 101, San Antonio, TX 78253");
         expect(result.streetNumber).to.equal("12939");
@@ -491,7 +491,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse an Interstate address with a # unit', function() {
         var result = addresser.parseAddress("10701 S Interstate 35 # 35, Austin, TX");
         expect(result.streetNumber).to.equal("10701");
@@ -502,49 +502,49 @@ describe('#parseAddress', function() {
         expect(result.placeName).to.equal("Austin");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse FM number style road names', function() {
         var result = addresser.parseAddress("11434 W FM 471, San Antonio, TX");
         expect(result.streetNumber).to.equal("11434");
         expect(result.streetName).to.equal("W FM 471");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("11434 W FM 471");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("San Antonio");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse street name ending in Oak', function() {
         var result = addresser.parseAddress("24330 Invitation Oak, San Antonio, TX");
         expect(result.streetNumber).to.equal("24330");
         expect(result.streetName).to.equal("Invitation Oak");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("24330 Invitation Oak");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("San Antonio");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse street name thats just a number', function() {
         var result = addresser.parseAddress("506 W 1100, Chesterton, IN");
         expect(result.streetNumber).to.equal("506");
         expect(result.streetName).to.equal("W 1100");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("506 W 1100");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("Chesterton");
         expect(result.stateAbbreviation).to.equal("IN");
         expect(result.stateName).to.equal("Indiana");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -554,67 +554,67 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Longbranch Run");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("25403 Longbranch Run");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("San Antonio");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse street name that ends in Chase', function() {
         var result = addresser.parseAddress("22923 Cardigan Chase, San Antonio, TX");
         expect(result.streetNumber).to.equal("22923");
         expect(result.streetName).to.equal("Cardigan Chase");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("22923 Cardigan Chase");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("San Antonio");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse street name that ends in Chase', function() {
         var result = addresser.parseAddress("7114 Sunny Day, San Antonio, TX");
         expect(result.streetNumber).to.equal("7114");
         expect(result.streetName).to.equal("Sunny Day");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("7114 Sunny Day");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("San Antonio");
         expect(result.stateAbbreviation).to.equal("TX");
         expect(result.stateName).to.equal("Texas");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse street name that has a leading directional and is just a number', function() {
         var result = addresser.parseAddress("110 N 2500, Vernal, UT");
         expect(result.streetNumber).to.equal("110");
         expect(result.streetName).to.equal("N 2500");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("110 N 2500");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("Vernal");
         expect(result.stateAbbreviation).to.equal("UT");
         expect(result.stateName).to.equal("Utah");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse "123 Rue Dauphine style address', function() {
         var result = addresser.parseAddress("625 Rue Dauphine, Eunice, LA");
         expect(result.streetNumber).to.equal("625");
         expect(result.streetName).to.equal("Rue Dauphine");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("625 Rue Dauphine");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("Eunice");
         expect(result.stateAbbreviation).to.equal("LA");
         expect(result.stateName).to.equal("Louisiana");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -624,11 +624,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Alameda De Las Pulgas");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("67A Alameda De Las Pulgas");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("Redwood City");
         expect(result.stateAbbreviation).to.equal("CA");
         expect(result.stateName).to.equal("California");
-        expect(result.zipCode).to.equal("94062");     
+        expect(result.zipCode).to.equal("94062");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -638,11 +638,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Pinellas Bwy S");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("630A Pinellas Bwy S");
-        expect(result.addressLine2).to.equal("Apt 3202");       
+        expect(result.addressLine2).to.equal("Apt 3202");
         expect(result.placeName).to.equal("Saint Petersburg");
         expect(result.stateAbbreviation).to.equal("FL");
         expect(result.stateName).to.equal("Florida");
-        expect(result.zipCode).to.equal("33715");     
+        expect(result.zipCode).to.equal("33715");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -652,11 +652,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Tupelo Sr");
         expect(result).to.not.have.property('streetSuffix')
         expect(result.addressLine1).to.equal("24497A Tupelo Sr");
-        expect(result).to.not.have.property("addressLine2");      
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("Saint Robert");
         expect(result.stateAbbreviation).to.equal("MO");
         expect(result.stateName).to.equal("Missouri");
-        expect(result.zipCode).to.equal("65584");     
+        expect(result.zipCode).to.equal("65584");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -666,11 +666,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Providence Ridge");
         expect(result.streetSuffix).to.equal("Turn");
         expect(result.addressLine1).to.equal("1300 Providence Ridge Turn");
-        expect(result).to.not.have.property("addressLine2");        
+        expect(result).to.not.have.property("addressLine2");
         expect(result.placeName).to.equal("North Chesterfield");
         expect(result.stateAbbreviation).to.equal("VA");
         expect(result.stateName).to.equal("Virginia");
-        expect(result.zipCode).to.equal("23236");     
+        expect(result.zipCode).to.equal("23236");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -680,11 +680,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Castlewood");
         expect(result.streetSuffix).to.equal("Rd");
         expect(result.addressLine1).to.equal("5210 Castlewood Rd");
-        expect(result.addressLine2).to.equal("Apt E");       
+        expect(result.addressLine2).to.equal("Apt E");
         expect(result.placeName).to.equal("North Chesterfield");
         expect(result.stateAbbreviation).to.equal("VA");
         expect(result.stateName).to.equal("Virginia");
-        expect(result.zipCode).to.equal("23234");     
+        expect(result.zipCode).to.equal("23234");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -694,11 +694,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("N Harrisburg");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("186 N Harrisburg St");
-        expect(result.addressLine2).to.equal("Apt 3");        
+        expect(result.addressLine2).to.equal("Apt 3");
         expect(result.placeName).to.equal("Oberlin");
         expect(result.stateAbbreviation).to.equal("PA");
         expect(result.stateName).to.equal("Pennsylvania");
-        expect(result.zipCode).to.equal("17113");     
+        expect(result.zipCode).to.equal("17113");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -708,11 +708,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Franklin");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("400 Franklin St");
-        expect(result.addressLine2).to.equal("Apt 205");        
+        expect(result.addressLine2).to.equal("Apt 205");
         expect(result.placeName).to.equal("West Reading");
         expect(result.stateAbbreviation).to.equal("PA");
         expect(result.stateName).to.equal("Pennsylvania");
-        expect(result.zipCode).to.equal("19611");     
+        expect(result.zipCode).to.equal("19611");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -722,11 +722,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Salem");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("315 Salem St");
-        expect(result.addressLine2).to.equal("Apt A");        
+        expect(result.addressLine2).to.equal("Apt A");
         expect(result.placeName).to.equal("West Pittston");
         expect(result.stateAbbreviation).to.equal("PA");
         expect(result.stateName).to.equal("Pennsylvania");
-        expect(result.zipCode).to.equal("18643");     
+        expect(result.zipCode).to.equal("18643");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -736,11 +736,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("State");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("485 State St");
-        expect(result.addressLine2).to.equal("Apt B");        
+        expect(result.addressLine2).to.equal("Apt B");
         expect(result.placeName).to.equal("Steelton");
         expect(result.stateAbbreviation).to.equal("PA");
         expect(result.stateName).to.equal("Pennsylvania");
-        expect(result.zipCode).to.equal("17113");     
+        expect(result.zipCode).to.equal("17113");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -750,11 +750,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Bristol");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("11 Bristol St");
-        expect(result.addressLine2).to.equal("Apt 2");        
+        expect(result.addressLine2).to.equal("Apt 2");
         expect(result.placeName).to.equal("East Cambridge");
         expect(result.stateAbbreviation).to.equal("MA");
         expect(result.stateName).to.equal("Massachusetts");
-        expect(result.zipCode).to.equal("02141");     
+        expect(result.zipCode).to.equal("02141");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -764,11 +764,11 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Oakland");
         expect(result.streetSuffix).to.equal("Ave");
         expect(result.addressLine1).to.equal("19917 Oakland Ave");
-        expect(result.addressLine2).to.equal("Unit 1");        
+        expect(result.addressLine2).to.equal("Unit 1");
         expect(result.placeName).to.equal("South Chesterfield");
         expect(result.stateAbbreviation).to.equal("VA");
         expect(result.stateName).to.equal("Virginia");
-        expect(result.zipCode).to.equal("23834");     
+        expect(result.zipCode).to.equal("23834");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
@@ -778,30 +778,30 @@ describe('#parseAddress', function() {
         expect(result.streetName).to.equal("Spruce");
         expect(result.streetSuffix).to.equal("St");
         expect(result.addressLine1).to.equal("802 Spruce St");
-        expect(result.addressLine2).to.equal("Unit A");        
+        expect(result.addressLine2).to.equal("Unit A");
         expect(result.placeName).to.equal("East Rochester");
         expect(result.stateAbbreviation).to.equal("PA");
         expect(result.stateName).to.equal("Pennsylvania");
-        expect(result.zipCode).to.equal("15074");     
+        expect(result.zipCode).to.equal("15074");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
-    
+
+
     it('should parse a Spring Lake Park city address', function() {
         var result = addresser.parseAddress("8070 Central Ave NE Unit 8070-206, Spring Lake Park, MN 55432");
         expect(result.streetNumber).to.equal("8070");
         expect(result.streetName).to.equal("Central");
         expect(result.streetSuffix).to.equal("Ave");
         expect(result.addressLine1).to.equal("8070 Central Ave NE");
-        expect(result.addressLine2).to.equal("Unit 8070-206");        
+        expect(result.addressLine2).to.equal("Unit 8070-206");
         expect(result.placeName).to.equal("Spring Lake Park");
         expect(result.stateAbbreviation).to.equal("MN");
         expect(result.stateName).to.equal("Minnesota");
-        expect(result.zipCode).to.equal("55432");     
+        expect(result.zipCode).to.equal("55432");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
-    
+
+
     it('should parse street name of N Portola with unit name', function() {
         var result = addresser.parseAddress("47 N Portola, # 35, Laguna Beach, CA");
         expect(result.streetNumber).to.equal("47");
@@ -812,10 +812,10 @@ describe('#parseAddress', function() {
         expect(result.placeName).to.equal("Laguna Beach");
         expect(result.stateAbbreviation).to.equal("CA");
         expect(result.stateName).to.equal("California");
-        expect(result).to.not.have.property("zipCode");        
+        expect(result).to.not.have.property("zipCode");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a street name with no suffix but the street name itself matches a suffix', function() {
         var result = addresser.parseAddress("1010 PINE, 9E-6-01\nST. LOUIS MO 63101");
         expect(result.streetNumber).to.equal("1010");
@@ -829,7 +829,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("63101");
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should return a formattedAddress field', function() {
         var result = addresser.parseAddress("12939 Texas Gold, San Antonio, TX 78253");
         expect(result.streetNumber).to.equal("12939");
@@ -844,7 +844,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should return a formattedAddress field when a second address line is provided', function() {
         var result = addresser.parseAddress("12939 Live Oak Street Unit 101, San Antonio, TX 78253");
         expect(result.streetNumber).to.equal("12939");
@@ -859,7 +859,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal('78253');
         expect(result).to.not.have.property("zipCodePlusFour");
     });
-    
+
     it('should parse a simple Canadian Address without zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON");
         expect(result.streetNumber).to.equal("123");
@@ -874,7 +874,7 @@ describe('#parseAddress', function() {
         expect(result.hasOwnProperty("zipCode")).to.equal(false);
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
-    
+
     it('should parse a simple Canadian Address with zip Code', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON M3K5K9");
         expect(result.streetNumber).to.equal("123");
@@ -893,9 +893,9 @@ describe('#parseAddress', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON M3K5K9, Canada");
         expect(result.streetNumber).to.equal("123");
         expect(result.streetName).to.equal("Main");
-        expect(result.streetSuffix).to.equal("St");
+        expect(result.streetSuffix).to.equal("Street");
         expect(result.hasOwnProperty("streetDirection")).to.equal(false);
-        expect(result.addressLine1).to.equal("123 Main St");
+        expect(result.addressLine1).to.equal("123 Main Street");
         expect(result.hasOwnProperty("addressLine2")).to.equal(false);
         expect(result.placeName).to.equal("Toronto");
         expect(result.stateAbbreviation).to.equal("ON");
@@ -907,7 +907,7 @@ describe('#parseAddress', function() {
 
 describe('#randomCity', function() {
     it('should provide a random city', function() {
-        for (var i = 0; i < 20; i++) { 
+        for (var i = 0; i < 20; i++) {
             var result = addresser.randomCity();
             expect(result.hasOwnProperty("city")).to.equal(true);
             expect(result['city'].length).to.be.above(1);
@@ -928,4 +928,196 @@ describe('##cities', function() {
         expect(result['TX'].length).to.be.greaterThan(300);
         expect(result['TX'].includes('ThisCityCannot143234234234234PossiblyExist')).to.be.false;
     });
+});
+
+describe('Extra canada', function() {
+    it('should parse a simple Canadian Address with Full word Street Direction', function() {
+        var result = addresser.parseAddress('310 8 Street North, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("N");
+        expect(result.addressLine1).to.equal("310 8 Street N");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with 2-letter Street Direction', function() {
+        var result = addresser.parseAddress('310 8 Street SW, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("SW");
+        expect(result.addressLine1).to.equal("310 8 Street SW");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with 1-letter Street Direction', function() {
+        var result = addresser.parseAddress('310 8 Street N, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("N");
+        expect(result.addressLine1).to.equal("310 8 Street N");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with Full word Street Direction', function() {
+        var result = addresser.parseAddress('310 8 Street North, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("N");
+        expect(result.addressLine1).to.equal("310 8 Street N");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with Full word Street Direction', function() {
+        var result = addresser.parseAddress('310 8 Street Southwest, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("SW");
+        expect(result.addressLine1).to.equal("310 8 Street SW");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with Full word Street Direction without ZipCode', function() {
+        var result = addresser.parseAddress('310 8 Street Southwest, Calgary, Alberta, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("8");
+        expect(result.streetSuffix).to.equal("Street");
+        expect(result.streetDirection).to.equal("SW");
+        expect(result.addressLine1).to.equal("310 8 Street SW");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with Canadian street type', function() {
+        var result = addresser.parseAddress('310 Main Private, Calgary, Alberta T2P 3P3, Canada');
+        expect(result.streetNumber).to.equal("310");
+        expect(result.streetName).to.equal("Main");
+        expect(result.streetSuffix).to.equal("Private");
+        expect(result.streetDirection).to.equal(undefined);
+        expect(result.addressLine1).to.equal("310 Main Private");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+        expect(result.stateName).to.equal("Alberta");
+        expect(result.zipCode).to.equal("T2P 3P3");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a simple Canadian Address with southeast street direction', function() {
+        var result = addresser.parseAddress('508 7 Avenue Southeast, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("508");
+        expect(result.streetName).to.equal("7");
+        expect(result.streetSuffix).to.equal("Avenue");
+        expect(result.streetDirection).to.equal('SE');
+        expect(result.addressLine1).to.equal("508 7 Avenue SE");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with any-case southeast street direction', function() {
+        var result = addresser.parseAddress('508 Queens dr SoUthEaSt, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("508");
+        expect(result.streetName).to.equal("Queens");
+        expect(result.streetSuffix).to.equal("Drive");
+        expect(result.streetDirection).to.equal('SE');
+        expect(result.addressLine1).to.equal("508 Queens Drive SE");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with any-case street direction - North East', function() {
+        var result = addresser.parseAddress('508 Queens dr North East, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("508");
+        expect(result.streetName).to.equal("Queens");
+        expect(result.streetSuffix).to.equal("Drive");
+        expect(result.streetDirection).to.equal('NE');
+        expect(result.addressLine1).to.equal("508 Queens Drive NE");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with any-case street direction - NoRth EaSt', function() {
+        var result = addresser.parseAddress('508 Queens dr NoRth EaSt, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("508");
+        expect(result.streetName).to.equal("Queens");
+        expect(result.streetSuffix).to.equal("Drive");
+        expect(result.streetDirection).to.equal('NE');
+        expect(result.addressLine1).to.equal("508 Queens Drive NE");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with any-case street direction - NE', function() {
+        var result = addresser.parseAddress('508 Queens dr NE, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("508");
+        expect(result.streetName).to.equal("Queens");
+        expect(result.streetSuffix).to.equal("Drive");
+        expect(result.streetDirection).to.equal('NE');
+        expect(result.addressLine1).to.equal("508 Queens Drive NE");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with Ln and SW street direction', function() {
+        var result = addresser.parseAddress('15 Signal Hill Ln SW, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("15");
+        expect(result.streetName).to.equal("Signal Hill");
+        expect(result.streetSuffix).to.equal("Lane");
+        expect(result.streetDirection).to.equal('SW');
+        expect(result.addressLine1).to.equal("15 Signal Hill Lane SW");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+    it('should parse a simple Canadian Address with Pvt and SW street direction', function() {
+        var result = addresser.parseAddress('15 Signal Hill Pvt SW, Calgary, AB, Canada');
+        expect(result.streetNumber).to.equal("15");
+        expect(result.streetName).to.equal("Signal Hill");
+        expect(result.streetSuffix).to.equal("Private");
+        expect(result.streetDirection).to.equal('SW');
+        expect(result.addressLine1).to.equal("15 Signal Hill Private SW");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Calgary");
+        expect(result.stateAbbreviation).to.equal("AB");
+    });
+
+
 });

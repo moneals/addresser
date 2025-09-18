@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": false, // disable for eslint + prettier combo
+  "editor.formatOnPaste": false, // disable for eslint + prettier combo
+  "[yaml]": {
+    "editor.formatOnSave": false
+  },
+  "[json]": {
+    "editor.formatOnSave": false,
+    "editor.tabSize": 4
+  },
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "files.trimTrailingWhitespace": true
+}
