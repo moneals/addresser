@@ -7,7 +7,7 @@ async function getDataForCountry(country_code){
   let country_code_upper = country_code.toUpperCase();
   var states = JSON.parse(fs.readFileSync("../data/"+country_code_lower+"-states.json"));
 
-  unzipper.Open.url(request,'http://download.geonames.org/export/zip/'+country_code_upper+'.zip')
+  unzipper.Open.url(request,'https://download.geonames.org/export/zip/'+country_code_upper+'.zip')
     .then(function(d) {
       var file = d.files.filter(function(d) {
         return d.path === country_code_upper+'.txt';
