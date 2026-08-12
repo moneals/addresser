@@ -214,8 +214,15 @@ module.exports = {
         '( +(?:' + usStreetDirectionalString + ')\\b)?', 'i');
       var rePO = new RegExp('(P\\.?O\\.?|POST\\s+OFFICE)\\s+(BOX|DRAWER)\\s\\w+', 'i');
       var reAveLetter = new RegExp('\.\*\\b(ave.?|avenue)\.\*\\b[a-zA-Z]\\b', 'i');
+      var reCountyRoad = new RegExp('^(\\d+[a-z]?)\\s+((?:county\\s+road)|(?:co\\s+rd)|(?:state\\s+route)|(?:state\\s+rte)|(?:state\\s+highway)|(?:state\\s+hwy))\\s+(\\d+[a-z]?)$', 'i');
       var reNoSuffix = new RegExp('\\b\\d+[a-z]?\\s[a-zA-Z0-9_ ]+\\b', 'i');
-      if (streetString.match(reAveLetter)) {
+      if (streetString.match(reCountyRoad)) {
+        var countyRoadMatch = streetString.match(reCountyRoad);
+        // Keep route/highway-style names as full street names for rural routes.
+        result.streetNumber = countyRoadMatch[1];
+        result.streetName = toTitleCase(countyRoadMatch[2]) + ' ' + countyRoadMatch[3].toUpperCase();
+        result.addressLine1 = result.streetNumber + ' ' + result.streetName;
+      } else if (streetString.match(reAveLetter)) {
         result.addressLine1 = streetString.match(reAveLetter)[0];
         streetString = streetString.replace(reAveLetter,"").trim(); // Carve off the first address line
         if (streetString && streetString.length > 0) {

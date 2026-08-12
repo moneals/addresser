@@ -889,6 +889,7 @@ describe('#parseAddress', function() {
         expect(result.zipCode).to.equal("M3K5K9");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
+
     it('should parse a simple Canadian Address with Trailing Country', function() {
         var result = addresser.parseAddress("123 Main St, Toronto, ON M3K5K9, Canada");
         expect(result.streetNumber).to.equal("123");
@@ -901,6 +902,96 @@ describe('#parseAddress', function() {
         expect(result.stateAbbreviation).to.equal("ON");
         expect(result.stateName).to.equal("Ontario");
         expect(result.zipCode).to.equal("M3K5K9");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a County Road address', function() {
+        var result = addresser.parseAddress("256 County Road 634, Athens, TN 37303");
+        expect(result.streetNumber).to.equal("256");
+        expect(result.streetName).to.equal("County Road 634");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("256 County Road 634");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Athens");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37303");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a Co Rd address', function() {
+        var result = addresser.parseAddress("138 Co Rd 502, Etowah, TN 37331");
+        expect(result.streetNumber).to.equal("138");
+        expect(result.streetName).to.equal("Co Rd 502");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("138 Co Rd 502");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Etowah");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37331");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a State Route address', function() {
+        var result = addresser.parseAddress("412 State Route 22, Dover, TN 37058");
+        expect(result.streetNumber).to.equal("412");
+        expect(result.streetName).to.equal("State Route 22");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("412 State Route 22");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Dover");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37058");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a State Rte address', function() {
+        var result = addresser.parseAddress("412 State Rte 22, Dover, TN 37058");
+        expect(result.streetNumber).to.equal("412");
+        expect(result.streetName).to.equal("State Rte 22");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("412 State Rte 22");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Dover");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37058");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a State Highway address', function() {
+        var result = addresser.parseAddress("412 State Highway 22, Dover, TN 37058");
+        expect(result.streetNumber).to.equal("412");
+        expect(result.streetName).to.equal("State Highway 22");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("412 State Highway 22");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Dover");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37058");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a State Hwy address', function() {
+        var result = addresser.parseAddress("412 State Hwy 22, Dover, TN 37058");
+        expect(result.streetNumber).to.equal("412");
+        expect(result.streetName).to.equal("State Hwy 22");
+        expect(result.hasOwnProperty("streetSuffix")).to.equal(false);
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("412 State Hwy 22");
+        expect(result.hasOwnProperty("addressLine2")).to.equal(false);
+        expect(result.placeName).to.equal("Dover");
+        expect(result.stateAbbreviation).to.equal("TN");
+        expect(result.stateName).to.equal("Tennessee");
+        expect(result.zipCode).to.equal("37058");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
 });
