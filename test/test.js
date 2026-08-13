@@ -688,6 +688,54 @@ describe('#parseAddress', function() {
         expect(result).to.not.have.property("zipCodePlusFour");
     });
 
+    it('should parse an address with Apt immediately after street address without a comma', function() {
+        var result = addresser.parseAddress("2630 Benstein Rd Apt 2, Wolverine Lake, MI 48390");
+        expect(result.streetNumber).to.equal("2630");
+        expect(result.streetName).to.equal("Benstein");
+        expect(result.streetSuffix).to.equal("Rd");
+        expect(result.addressLine1).to.equal("2630 Benstein Rd");
+        expect(result.addressLine2).to.equal("Apt 2");
+        expect(result.placeName).to.equal("Wolverine Lake");
+        expect(result.stateAbbreviation).to.equal("MI");
+        expect(result.zipCode).to.equal("48390");
+    });
+
+    it('should parse an address with Apartment immediately after street address without a comma', function() {
+        var result = addresser.parseAddress("2630 Benstein Rd Apartment 2, Wolverine Lake, MI 48390");
+        expect(result.streetNumber).to.equal("2630");
+        expect(result.streetName).to.equal("Benstein");
+        expect(result.streetSuffix).to.equal("Rd");
+        expect(result.addressLine1).to.equal("2630 Benstein Rd");
+        expect(result.addressLine2).to.equal("Apartment 2");
+        expect(result.placeName).to.equal("Wolverine Lake");
+        expect(result.stateAbbreviation).to.equal("MI");
+        expect(result.zipCode).to.equal("48390");
+    });
+
+    it('should parse an address with Ste immediately after street address without a comma', function() {
+        var result = addresser.parseAddress("2630 Benstein Rd Ste 2, Wolverine Lake, MI 48390");
+        expect(result.streetNumber).to.equal("2630");
+        expect(result.streetName).to.equal("Benstein");
+        expect(result.streetSuffix).to.equal("Rd");
+        expect(result.addressLine1).to.equal("2630 Benstein Rd");
+        expect(result.addressLine2).to.equal("Ste 2");
+        expect(result.placeName).to.equal("Wolverine Lake");
+        expect(result.stateAbbreviation).to.equal("MI");
+        expect(result.zipCode).to.equal("48390");
+    });
+
+    it('should parse an address with Suite immediately after street address without a comma', function() {
+        var result = addresser.parseAddress("2630 Benstein Rd Suite 2, Wolverine Lake, MI 48390");
+        expect(result.streetNumber).to.equal("2630");
+        expect(result.streetName).to.equal("Benstein");
+        expect(result.streetSuffix).to.equal("Rd");
+        expect(result.addressLine1).to.equal("2630 Benstein Rd");
+        expect(result.addressLine2).to.equal("Suite 2");
+        expect(result.placeName).to.equal("Wolverine Lake");
+        expect(result.stateAbbreviation).to.equal("MI");
+        expect(result.zipCode).to.equal("48390");
+    });
+
     it('should parse Oberlin city address', function() {
         var result = addresser.parseAddress("186 N Harrisburg St Apt 3, Oberlin, PA 17113");
         expect(result.streetNumber).to.equal("186");
@@ -992,6 +1040,21 @@ describe('#parseAddress', function() {
         expect(result.stateAbbreviation).to.equal("TN");
         expect(result.stateName).to.equal("Tennessee");
         expect(result.zipCode).to.equal("37058");
+        expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
+    });
+
+    it('should parse a non comma separated trailing apartment number', function() {
+        var result = addresser.parseAddress("2630 Benstein Rd Apt 2, Wolverine Lake, MI 48390");
+        expect(result.streetNumber).to.equal("2630");
+        expect(result.streetName).to.equal("Benstein");
+        expect(result.streetSuffix).to.equal("Rd");
+        expect(result.hasOwnProperty("streetDirection")).to.equal(false);
+        expect(result.addressLine1).to.equal("2630 Benstein Rd");
+        expect(result.addressLine2).to.equal("Apt 2");
+        expect(result.placeName).to.equal("Wolverine Lake");
+        expect(result.stateAbbreviation).to.equal("MI");
+        expect(result.stateName).to.equal("Michigan");
+        expect(result.zipCode).to.equal("48390");
         expect(result.hasOwnProperty("zipCodePlusFour")).to.equal(false);
     });
 });

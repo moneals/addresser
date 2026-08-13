@@ -25,6 +25,10 @@ function toTitleCase(str) {
     });
 }
 
+function escapeRegExp(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 //returns a random property of a given object
 function randomProperty (obj) {
   var keys = Object.keys(obj)
@@ -158,18 +162,25 @@ module.exports = {
       placeString = addressParts[addressParts.length-1].trim();
     }
     result.placeName = "";
-   
-    allCities[result.stateAbbreviation].some(function(element) {
-      var re = new RegExp(element + "$", "i");
-      if (placeString.match(re)) {
-        placeString = placeString.replace(re,""); // Carve off the place name
-        
-        result.placeName = element;
-        return element; // Found a winner - stop looking for cities
+    var trimmedPlaceString = placeString.trim();
+    var bestPlaceMatch = "";
+
+    allCities[result.stateAbbreviation].forEach(function(element) {
+      var re = new RegExp(escapeRegExp(element) + "$", "i");
+      if (trimmedPlaceString.match(re) && element.length > bestPlaceMatch.length) {
+        bestPlaceMatch = element;
       }
     });
+
+    if (bestPlaceMatch) {
+      var bestPlaceRegex = new RegExp(escapeRegExp(bestPlaceMatch) + "$", "i");
+      trimmedPlaceString = trimmedPlaceString.replace(bestPlaceRegex, "").trim(); // Carve off the place name
+      placeString = trimmedPlaceString;
+      result.placeName = bestPlaceMatch;
+    }
+
     if (!result.placeName) {
-      result.placeName = toTitleCase(placeString);
+      result.placeName = toTitleCase(trimmedPlaceString);
       placeString = "";
     }
     
@@ -200,6 +211,15 @@ module.exports = {
     }
     if (addressParts.length === 1) {
       streetString = addressParts[0].trim();
+      // Detect common unit designators appended directly to the street line without a comma.
+      if (typeof result.addressLine2 === "undefined") {
+        var reTrailingCommonLine2 = new RegExp('\\s((?:apt|apartment|ste|suite)\\.?\\s+[#a-zA-Z0-9_\/-]+)$','i');
+        var trailingCommonLine2Match = streetString.match(reTrailingCommonLine2);
+        if (trailingCommonLine2Match) {
+          result.addressLine2 = trailingCommonLine2Match[1].trim();
+          streetString = streetString.replace(reTrailingCommonLine2, '').trim();
+        }
+      }
       // If no address line 2 exists check to see if it is incorrectly placed at the front of line 1
       if (typeof result.addressLine2 === "undefined") {
         var re = new RegExp('^(' + usLine2String + ')\\s\\S+','i');
@@ -228,10 +248,15 @@ module.exports = {
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
-            throw 'Can not parse address. Too many address lines. Input string: ' + address;
+            var reLine2Prefix = new RegExp('^(' + usLine2String + ')\\b','i');
+            if (result.addressLine2.match(reLine2Prefix)) {
+              throw 'Can not parse address. Too many address lines. Input string: ' + address;
+            }
+            result.placeName = toTitleCase((result.addressLine2 + ' ' + result.placeName).trim());
           } else {
             result.addressLine2 = streetString;
           }
+          result.addressLine2 = streetString;
         }
         
         var streetParts = result.addressLine1.split(' ');
@@ -255,10 +280,15 @@ module.exports = {
         if (streetString && streetString.length > 0) {
           // Check if line2 data was already parsed
           if (result.hasOwnProperty('addressLine2') && result.addressLine2.length > 0) {
-            throw 'Can not parse address. Too many address lines. Input string: ' + address;
+            var reLine2Prefix = new RegExp('^(' + usLine2String + ')\\b','i');
+            if (result.addressLine2.match(reLine2Prefix)) {
+              throw 'Can not parse address. Too many address lines. Input string: ' + address;
+            }
+            result.placeName = toTitleCase((result.addressLine2 + ' ' + result.placeName).trim());
           } else {
             result.addressLine2 = streetString;
           }
+          result.addressLine2 = streetString;
         }
         var streetParts = result.addressLine1.split(' ');
     
