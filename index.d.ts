@@ -10,6 +10,7 @@ declare module "addresser" {
 		stateName: string;
 		placeName: string;
 		addressLine1: string;
+		addressLine2?: string;
 		streetNumber: string;
 		streetSuffix: string;
 		streetName: string;
