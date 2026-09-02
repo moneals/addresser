@@ -79,6 +79,7 @@
     "clfs"       : "clfs",
     "cliff"      : "clf",
     "cliffs"     : "clfs",
+    "close"      : "cl",
     "club"       : "clb",
     "cmn"        : "cmn",
     "cmp"        : "cp",
@@ -293,6 +294,7 @@
     "lgts"       : "lgts",
     "light"      : "lgt",
     "lights"     : "lgts",
+    "link"       : "lk",
     "lk"         : "lk",
     "lks"        : "lks",
     "ln"         : "ln",
@@ -383,6 +385,7 @@
     "prairie"    : "pr",
     "prarie"     : "pr",
     "prk"        : "park",
+    "promenade"  : "prm",
     "prr"        : "pr",
     "prt"        : "prt",
     "prts"       : "prts",
@@ -550,6 +553,8 @@
     "wl"         : "wl",
     "wls"        : "wls",
     "wy"         : "way",
+    "wynd"       : "wn",
+    "wynde"      : "wn",
     "xing"       : "xing",
     "xrd"        : "xrd"
  }
